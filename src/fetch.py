@@ -7,12 +7,14 @@ from typing import Callable, Optional, Any
 import requests
 from backoff import on_exception, expo
 from ratelimit import RateLimitDecorator, sleep_and_retry
-from requests import RequestException
+from requests import RequestException, Timeout
 
 # RateLimiter objects
 scryfall_rate_limit = RateLimitDecorator(calls=20, period=1)
 mtgp_rate_limit = RateLimitDecorator(calls=20, period=1)
 
+# Default timeout for all network requests (in seconds)
+TIMEOUT = 10
 
 """
 DECORATORS
@@ -50,7 +52,7 @@ def handle_scryfall_request(fail_response: Optional[Any] = None) -> Callable:
     def decorator(func):
         @sleep_and_retry
         @scryfall_rate_limit
-        @on_exception(expo, RequestException, max_tries=2, max_time=0.75)
+        @on_exception(expo, RequestException, max_tries=3, max_time=10)
         @handle_final_exception(fail_response)
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
@@ -70,7 +72,7 @@ def handle_mtgp_request(fail_response: Optional[Any] = None) -> Callable:
     def decorator(func):
         @sleep_and_retry
         @mtgp_rate_limit
-        @on_exception(expo, RequestException, max_tries=2, max_time=0.75)
+        @on_exception(expo, RequestException, max_tries=3, max_time=10)
         @handle_final_exception(fail_response)
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
@@ -93,7 +95,7 @@ def get_data_url(url: str, params: Optional[dict[str, str]] = None) -> dict:
     @param params: Params to pass to an API endpoint.
     @return: JSON data returned.
     """
-    with requests.get(url, params=(params or {})) as response:
+    with requests.get(url, params=(params or {}), timeout=TIMEOUT) as response:
         if response.status_code == 200:
             return response.json() or {}
         return {}
@@ -107,7 +109,7 @@ def get_scryfall_set(code: str) -> dict:
     @param code: MTG set code, ex: MH2
     @return: Set data as dict.
     """
-    with requests.get(f"https://api.scryfall.com/sets/{code}") as response:
+    with requests.get(f"https://api.scryfall.com/sets/{code}", timeout=TIMEOUT) as response:
         if response.status_code == 200:
             data = response.json() or {}
             return data if data.get("object") == "set" else {}
@@ -124,7 +126,7 @@ def get_scryfall_card_named(name: str, code: str) -> dict:
     @return: Card data as dict.
     """
     with requests.get(
-        f"https://api.scryfall.com/cards/named", params={"fuzzy": name, "set": code}
+        f"https://api.scryfall.com/cards/named", params={"fuzzy": name, "set": code}, timeout=TIMEOUT
     ) as response:
         if response.status_code == 200:
             data = response.json() or {}
@@ -141,7 +143,7 @@ def get_scryfall_card_numbered(code: str, number: str) -> dict:
     @param number: Collector number of the card.
     @return: Card data as dict.
     """
-    with requests.get(f"https://api.scryfall.com/cards/{code}/{number}") as response:
+    with requests.get(f"https://api.scryfall.com/cards/{code}/{number}", timeout=TIMEOUT) as response:
         if response.status_code == 200:
             data = response.json() or {}
             return data if data.get("object", "error") != "error" else {}
@@ -156,7 +158,7 @@ def get_scryfall_image(url: str, path: str):
     @param path: Path to save the image.
     @return: True if successful, False if failed.
     """
-    with requests.get(url) as response:
+    with requests.get(url, timeout=TIMEOUT) as response:
         if response.status_code == 200:
             with open(path, "wb") as f:
                 f.write(response.content)
@@ -177,7 +179,7 @@ def get_mtgp_image(url: str, path: str):
     @param path: Path to save the image.
     @return: True if successful, False if failed.
     """
-    with requests.get(url) as response:
+    with requests.get(url, timeout=TIMEOUT) as response:
         if response.status_code == 200:
             with open(path, "wb") as f:
                 f.write(response.content)
@@ -187,12 +189,7 @@ def get_mtgp_image(url: str, path: str):
 
 @handle_mtgp_request(None)
 def get_mtgp_page(url: str) -> Optional[bytes]:
-    """
-    Grab the HTML from a page on MTGPics.
-    @param url: URL to the page.
-    @return: Either the page as bytes or an empty string if failed.
-    """
-    with requests.get(url) as response:
+    with requests.get(url, timeout=TIMEOUT) as response:
         if response.status_code == 200:
             if "Wrong ref or number." not in response.text:
                 if "No card found." not in response.text:

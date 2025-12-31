@@ -5,16 +5,18 @@ APP TO EXECUTE THE SEARCH
 import os
 import re
 import sys
+from zoneinfo import ZoneInfo
+from datetime import datetime
 from functools import cached_property
 from multiprocessing import cpu_count, freeze_support
 from multiprocessing.pool import Pool
+from src.core import log_debug, log_info
 from pathlib import Path
 from typing import Union, Optional
 from time import perf_counter
 from src import card as dl
 from src import settings as cfg
 from src.__version__ import version
-from src.constants import console
 from colorama import Style, Fore
 
 from src.core import (
@@ -35,7 +37,6 @@ detailed_reg = re.compile(r"(.*) \((.*)\) ?(.*)")
 cwd = os.getcwd()
 os.system("")
 
-
 class Download:
     def __init__(
         self,
@@ -48,10 +49,6 @@ class Download:
         self._list = cfg.cardlist if not card_list else card_list
         self._command: Optional[str] = command
         self.fails: list = []
-
-        # Mute console output if in testing mode
-        if self.is_test:
-            console.waiting = False
 
     """
     PROPERTIES
@@ -87,9 +84,50 @@ class Download:
     def time(self) -> float:
         return perf_counter() - self._time
 
-    """
-    METHODS
-    """
+    #           ___ ___       __   __   __
+    #     |\/| |__   |  |__| /  \ |  \ /__`
+    #     |  | |___  |  |  | \__/ |__/ .__/
+
+    def rotate_log_file():
+        """
+        Checks for existence of a prior logfile containing failed cards.
+        If the prior log file contains card entries (more than 1 line), it is rotated with a timestamp.
+        If it only contains a header or is empty, it is deleted.
+        Finally, a new log file is created with the current Berlin timestamp.
+        """
+        log_dir = os.path.join(cwd, "logs")
+        log_file_path = os.path.join(log_dir, "failed_downloads.txt")
+
+        # Ensure directory exists to prevent errors
+        Path(log_dir).mkdir(mode=511, parents=True, exist_ok=True)
+
+        # 1. Handle existing log file
+        if os.path.isfile(log_file_path):
+            try:
+                # Check content length (ignoring empty lines)
+                with open(log_file_path, "r", encoding="utf-8") as f:
+                    lines = [line.strip() for line in f if line.strip()]
+
+                if len(lines) > 1:
+                    # File has actual failures (Header + Content) -> Rotate
+                    mtime = os.path.getmtime(log_file_path)
+                    timestamp_str = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d_%H-%M-%S")
+                    new_name = os.path.join(log_dir, f"failed_downloads-{timestamp_str}.txt")
+                    os.rename(log_file_path, new_name)
+                else:
+                    # File is empty or only has header -> Delete
+                    os.remove(log_file_path)
+            except OSError as e:
+                print(f"{Fore.RED}Error handling old log file: {e}{Style.RESET_ALL}")
+
+        # 2. Create new log file with Europe/Berlin Timezone Header
+        try:
+            current_time = datetime.now(ZoneInfo("Europe/Berlin"))
+            header_time = current_time.strftime("### %Y-%m-%d %H:%M:%S ###")
+            with open(log_file_path, "w", encoding="utf-8") as f:
+                f.write(f"{header_time}\n")
+        except Exception as e:
+            print(f"{Fore.RED}Could not initialize log file: {e}{Style.RESET_ALL}")
 
     def start(self) -> list[tuple[bool, str]]:
         """
@@ -127,27 +165,28 @@ class Download:
         """
         # Associate the proper download method
         if isinstance(card, dict):
+            log_debug(f"Processing JSON formatted card: {card}")
             return self.download_dict(card)
         elif isinstance(card, str):
+            log_debug(f"Processing card: {card}")
             return (
                 self.download_detailed(card)
                 if " (" in card
                 else self.download_normal(card)
             )
-        console.print(f"Unknown: {str(card)}")
+        log_info(f"Unknown card: {str(card)}")
         return [(False, str(card))]
 
     def complete(self):
         """
         Tell the user the download process is complete.
         """
-        console.print(f"Downloads finished in {self.time} seconds!")
-        console.print(
-            "\nAll available files downloaded.\n"
-            "See failed.txt for images that couldn't be located.\n"
-            "Press enter to exit :)"
+        log_info(f"Downloads finished in {round(self.time,2)} seconds!")
+        log_info(
+            "All available files downloaded.\n"
+            "Check logs/failed_downloads.txt for misses.\n"
+            "Press enter to exit."
         )
-        console.flush()
         input()
         sys.exit()
 
@@ -213,6 +252,7 @@ class Download:
 
         # Valid card data found?
         if not card:
+
             return [(False, item)]
 
         # Try to download the card
@@ -232,18 +272,24 @@ class Download:
         card_class = dl.get_card_class(card)
         return card_class(card).download(not self.is_test)
 
+#    ___  ___  ___  _____ _   _
+#    |  \/  | / _ \|_   _| \ | |
+#    | .  . |/ /_\ \ | | |  \| |
+#    | |\/| ||  _  | | | | . ` |
+#    | |  | || | | |_| |_| |\  |
+#    \_|  |_/\_| |_/\___/\_| \_/
 
 if __name__ == "__main__":
 
     # Add necessary directories
     freeze_support()
-    Path(cfg.folder).mkdir(mode=511, parents=True, exist_ok=True)
+    Path(cfg.download_folder).mkdir(mode=511, parents=True, exist_ok=True)
     Path(cfg.mtgp).mkdir(mode=511, parents=True, exist_ok=True)
     Path(cfg.scry).mkdir(mode=511, parents=True, exist_ok=True)
-    Path(os.path.join(cwd, "logs")).mkdir(mode=511, parents=True, exist_ok=True)
+
 
     # Welcome page
-    print(f"{Fore.YELLOW}{Style.BRIGHT}\n")
+    print(f"{Fore.MAGENTA}{Style.NORMAL}\n")
     print("  ██████╗ ███████╗████████╗   ███╗   ███╗████████╗ ██████╗ ")
     print(" ██╔════╝ ██╔════╝╚══██╔══╝   ████╗ ████║╚══██╔══╝██╔════╝ ")
     print(" ██║  ███╗█████╗     ██║      ██╔████╔██║   ██║   ██║  ███╗")
@@ -256,18 +302,24 @@ if __name__ == "__main__":
     print(" ██╔══██║██╔══██╗   ██║       ██║╚██╗██║██║   ██║██║███╗██║ ")
     print(" ██║  ██║██║  ██║   ██║       ██║ ╚████║╚██████╔╝╚███╔███╔╝ ")
     print(" ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝  ")
-    print(f"{Fore.CYAN}{Style.BRIGHT}MTG Art Downloader by Mr Teferi v{version}")
-    print("Additional thanks to Trix are for Scoot, Chilli, and Gikkman")
-    print(f"https://www.patreon.com/mpcfill --- Support our apps!{Style.RESET_ALL}\n")
+    print(f"{Fore.CYAN}{Style.BRIGHT}MTG Art Downloader by Mr Teferi v1.3.0")
+    print(f"Additional thanks to Trix are for Scoot, Chilli, and Gikkman")
+    print(f"Forked in Dec 2025 and modified by hangrybear666 {version}{Style.RESET_ALL}\n")
 
     # Does the user want to use Google Sheet queries or cards from txt file?
     choice = input(
+        "You can change Settings in config.ini.\n"
         "Please view the README for detailed instructions.\n"
-        "Cards in cards.txt can either be listed as 'Name' or 'SET--Name'\n"
-        "Full Github and README available at: mprox.link/art-downloader\n"
+        "Cards in cards.txt can either be listed as 'Phyrexian Tower' or 'Phyrexian Tower (MH3) 303'\n"
+        "Press ENTER to proceed with default settings.\n"
     )
 
     # If the command is valid, download based on that, otherwise cards.txt
     if choice != "":
         print()  # Add newline gap
+
+    # Rotate log files
+    Download.rotate_log_file()
+
+    # Start the Download
     Download(choice).start()

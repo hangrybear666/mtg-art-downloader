@@ -28,18 +28,18 @@ FILES AND FOLDERS
 cardlist = os.path.join(cwd, config.get("FILES", "Card.List", fallback="cards.txt"))
 
 # Parent folder of all images
-folder = os.path.join(
+download_folder = os.path.join(
     cwd, config.get("FILES", "Download.Folder", fallback="downloaded")
 )
 
 # Scryfall sub folder
 scry = os.path.join(
-    cwd, folder + "/" + config.get("FILES", "Scryfall.Art.Folder", fallback="scryfall")
+    cwd, download_folder + "/" + config.get("FILES", "Scryfall.Art.Folder", fallback="scryfall")
 )
 
 # MTG Pics sub folder
 mtgp = os.path.join(
-    cwd, folder + "/" + config.get("FILES", "MTGPics.Art.Folder", fallback="mtgpics")
+    cwd, download_folder + "/" + config.get("FILES", "MTGPics.Art.Folder", fallback="mtgpics")
 )
 
 # Output naming convention
@@ -50,6 +50,9 @@ naming = config.get(
 """
 APP SETTINGS
 """
+
+# Sets log level for the application. Valid Values are INFO | DEBUG | NONE
+log_level = config.get("SETTINGS", "Log.Level", fallback="INFO")
 
 # Download full card image from Scryfall?
 download_scryfall_full = config.getboolean(

@@ -1,33 +1,13 @@
 # MTG Art Downloader
-Mass download MTG card arts using MTGPics with Scryfall as a backup source, downloaded images are named according to their card name with the artist in parenthesis, set code in brackets. Arts from mtgpics are put in one folder, scryfall art crops in another folder. If any cards couldn't be found from either source a "failed.txt" is populated with names of the missing cards so you can manually look for them. For additional help using this app, join our discord server (click the discord button below), we have a #downloader channel and can help with any questions.
+Mass download MTG card arts using MTGPics with Scryfall as a backup source, downloaded images are named according to their card name with the artist in parenthesis, set code in brackets. Arts from mtgpics are put in one folder, scryfall art crops in another folder. If any cards couldn't be found from either source a `logs/failed_downloads.txt` is populated with names of the missing cards so you can manually look for them.
 
-<p align="center">
-  <a href="http://mprox.link/discord">
-    <img alt="Discord" src="https://img.shields.io/discord/889831317066358815?label=Discord&style=plastic">
-  </a>
-  <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-brightgreen?style=plastic">
-  <img alt="Passing" src="https://img.shields.io/github/actions/workflow/status/MrTeferi/MTG-Art-Downloader/py-test.yml?style=plastic">
-  <img alt="GitHub" src="https://img.shields.io/github/license/MrTeferi/MTG-Art-Downloader?color=1082C2&style=plastic">
-  <a href="https://github.com/MrTeferi/MTG-Art-Downloader/releases">
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/MrTeferi/MTG-Art-Downloader/total?style=plastic">
-  </a>
-  <img alt="Python" src="https://img.shields.io/badge/python-3.11-yellow?style=plastic">
-</p>
-
-# Setup - Executable Release
-- Download the latest release
-- **Option 1**: Paste a list of cards into the cards.txt file. For best results, I recommend exporting a list from your favorite deck editor (I use Moxfield)
-using the mode that displays each card like so: `Damnation (TSR) 106`. It's okay if this is preceded by a number value, MTG Art Downloader will correct
-for this. Start the app and hit Enter. The app will begin downloading art images for these cards!
-- **Option 2**: Alternatively you can use Scryfall notation if you're looking for something specific, like all Legendary creatures within Modern Horizons 2, or
-even every card in Modern Horizons 2! Scroll down to the section on Scryfall commands.
-
-# Setup - Python Version
+# Setup - Python CLI
 We now use [poetry](https://python-poetry.org/docs/) for dependency management:
 - Have or Install Python 3.9+
-- Have or Install poetry, you can use one of the following commands or [check out this install guide](https://python-poetry.org/docs/):
+- Have or Install poetry, you can use the following commands or [check out this install guide](https://python-poetry.org/docs/):
 
 ```shell
+# install fedora python 3.11 package
 sudo dnf install python311
 cd ~/git
 git clone git@github.com:hangrybear666/mtg-art-downloader.git
@@ -36,9 +16,8 @@ python3.11 -m venv ./.venv
 source ./.venv/bin/activate
 pip install pipx
 pipx install poetry
-# add "package-mode = false" to pyproject.toml for [tool.poetry]
 poetry install
-poetry run python main.py
+python main.py
 ```
 
 - Alternatively you can get PyCharm which has native support for Poetry and can automatically start the app for you!
@@ -76,10 +55,7 @@ cards make sure to use MID and not PMID!
 - You can increase or decrease threads added per second depending on the speed of your internet.
 - You can choose the naming convention for saving the downloaded images.
 
-# Contributing
-If you wish to contribute to this project:
-- Before doing a PR always make sure to run `pre-commit run` to ensure your code is standardized
-- Only commit with commitizen, add your changed files with `git add .` then `cz commit` and follow the prompts
+# Testing
 - You can test the app for consistency with:
 ```shell
 pytest src/tests.py
@@ -88,5 +64,3 @@ pytest src/tests.py
 ```shell
 mypy main.py build.py src
 ```
-
-[1]: https://python-poetry.org/docs/basic-usage/

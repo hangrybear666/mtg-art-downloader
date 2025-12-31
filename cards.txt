@@ -1,20 +1,107 @@
-Ancient Tomb (uma) 236
-Assassin's Trophy (2x2) 175
-Bala Ged Recovery // Bala Ged Sanctuary (znr) 180
-Beast Whisperer (pres) 123
-Beast Within (c21) 186
-Birds of Paradise (m12) 165
-Black Market Connections (clb) 669
-Blighted Woodland (clb) 881
-Bloodbond March (rav) 192
-Bloom Tender (2x2) 138
-Bojuka Bog (c20) 259
-Boseiju, Who Endures (neo) 266
-Cankerbloom (one) 161
-Command Tower (cmr) 350
-Damnation (2x2) 73
-Deadly Rollick (c20) 42
-Demonic Tutor (mb1) 620
-Diabolic Intent (bro) 89
-Echoing Return (mh2) 83
-Elves of Deep Shadow (rav) 161
+Adarkar Wastes (6ED) 319
+Arcane Signet (CMR) 297
+Arid Mesa (ZEN) 211
+Azorius Signet (C20) 238
+Battlefield Forge (FIC) 375
+Birds of Paradise (8ED) 233
+Blood Crypt (RNA) 245
+Bloodstained Mire (KTK) 230
+Boros Signet (SLD) 291
+Bountiful Promenade (CLB) 348
+Breeding Pool (RVR) 275
+Brushland (LTC) 297
+Caves of Koilos (10E) 350
+City of Brass (ARN) 71
+Clifftop Retreat (FIC) 381
+Command Tower (ELD) 333
+Delighted Halfling (LTR) 158
+Dimir Signet (SLD) 287
+Dragonskull Summit (FIC) 387
+Drowned Catacomb (XLN) 253
+Exotic Orchard (C19) 242
+Farseek (LTC) 244
+Fellwar Stone (BRC) 141
+Fiery Islet (MH1) 238
+Flooded Strand (MH3) 436
+Forbidden Orchard (CHK) 276
+Glacial Fortress (LTC) 315
+Godless Shrine (GTC) 242
+Golgari Signet (SLD) 292
+Gruul Signet (SLD) 288
+Hallowed Fountain (RTR) 241
+Hinterland Harbor (DOM) 240
+Horizon Canopy (IMA) 240
+Indatha Triome (IKO) 248
+Isolated Chapel (FIC) 405
+Izzet Signet (SLD) 293
+Jetmir's Garden (SNC) 250
+Karplusan Forest (10E) 354
+Ketria Triome (IKO) 250
+Llanowar Wastes (10E) 355
+Luxury Suite (BBD) 82
+Mana Confluence (JOU) 163
+Marsh Flats (SLU) 1
+Misty Rainforest (ZEN) 220
+Morphic Pool (CLB) 357
+Nature's Lore (DMR) 170
+Nurturing Peatland (MH1) 243
+Nykthos, Shrine to Nyx (THS) 223
+Orzhov Signet (SLD) 294
+Otawara, Soaring City (NEO) 271
+Overgrown Tomb (RTR) 243
+Phyrexian Tower (MH3) 303
+Polluted Delta (KTK) 239
+Prismatic Vista (MH1) 244
+Raffine's Tower (SNC) 254
+Rakdos Signet (C20) 249
+Rampant Growth (C15) 199
+Raugrin Triome (IKO) 251
+Reflecting Pool (CNS) 210
+Rejuvenating Springs (CMR) 354
+Reliquary Tower (C16) 316
+Rootbound Crag (XLN) 256
+Sacred Foundry (SLD) 131
+Savai Triome (IKO) 253
+Scalding Tarn (SLU) 2
+Sea of Clouds (BBD) 84
+Selesnya Signet (SLD) 290
+Shivan Reef (DMU) 255
+Silent Clearing (MH1) 246
+Simic Signet (SLD) 295
+Sol Ring (C21) 263
+Spara's Headquarters (SNC) 257
+Spectator Seating (CMR) 356
+Spire Garden (BBD) 85
+Steam Vents (GPT) 164
+Stomping Ground (RNA) 259
+Sulfur Falls (LTC) 333
+Sulfurous Springs (LTC) 334
+Sunbaked Canyon (MH1) 247
+Sunpetal Grove (LTC) 336
+Talisman of Conviction (SLD) 1060
+Talisman of Creativity (SLD) 1058
+Talisman of Curiosity (SLD) 1061
+Talisman of Dominance (SLD) 1053
+Talisman of Hierarchy (SLD) 1057
+Talisman of Impulse (SLD) 1055
+Talisman of Indulgence (SLD) 1054
+Talisman of Progress (SLD) 1052
+Talisman of Resilience (SLD) 1059
+Talisman of Unity (SLD) 1056
+Temple Garden (RAV) 284
+Thought Vessel (CMA) 235
+Three Visits (CMR) 261
+Training Center (CMR) 358
+Underground River (LTC) 342
+Undergrowth Stadium (CMR) 359
+Urborg, Tomb of Yawgmoth (M15) 248
+Vault of Champions (CMR) 360
+Verdant Catacombs (SLU) 3
+Watery Grave (GTC) 249
+Windswept Heath (ONS) 328
+Wooded Foothills (MH3) 441
+Woodland Cemetery (DMR) 261
+Xander's Lounge (SNC) 260
+Yavimaya Coast (10E) 363
+Zagoth Triome (IKO) 259
+Ziatora's Proving Ground (SNC) 261

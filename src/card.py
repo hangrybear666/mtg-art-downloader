@@ -13,7 +13,7 @@ from unidecode import unidecode
 from src import settings as cfg
 from src import core
 from src.constants import con
-from src.core import log_failed, log_mtgp, log_scryfall
+from src.core import log_failed, log_mtgp, log_scryfall, log_debug
 from src.fetch import get_scryfall_image, get_mtgp_image, get_mtgp_page
 from src.types import DownloadResult
 
@@ -213,7 +213,7 @@ class Card:
                 and self.download_scryfall(self.scry_url, self.scry_path, self.label)
                 and logging
             ):
-                log_failed(self.label, print_out=False)
+                log_failed(self.label, print_out=True)
             elif logging:
                 log_failed(self.label)
             return [(False, self.label)]
@@ -459,7 +459,7 @@ class MDFC(Card):
                 if cfg.download_scryfall and self.download_scryfall(
                     scry_url, self.scry_paths[i], self.labels[i]
                 ):
-                    log_failed(self.labels[i], print_out=False)
+                    log_failed(self.labels[i], print_out=True)
                 elif logging:
                     log_failed(self.labels[i])
             results.append((result, self.labels[i]))

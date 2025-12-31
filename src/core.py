@@ -11,9 +11,7 @@ from pathlib import Path
 from colorama import Style, Fore
 from bs4 import BeautifulSoup
 from requests import RequestException
-from unidecode import unidecode
 from src import settings as cfg
-from src.constants import console
 from src.fetch import get_cards_paged, get_mtgp_page
 
 cwd = os.getcwd()
@@ -280,29 +278,42 @@ def get_card_face(entries: list[dict], back: bool = False) -> Optional[str]:
 
 
 """
-LOGGING
+VERY BASIC LOGGING
 """
 
+def log_info(message: str) -> None:
+    """
+    INFO Logging utility
+    """
+    if not cfg.log_level == "NONE":
+        print(f"{Fore.CYAN}{Style.NORMAL}INFO:{Style.RESET_ALL} {message}", flush=True)
+
+def log_debug(message: str) -> None:
+    """
+    Debug logging for development purposes
+    """
+    if cfg.log_level == "DEBUG" and not cfg.log_level == "NONE":
+        print(f"{Fore.LIGHTMAGENTA_EX}{Style.DIM}DEBUG:{Style.RESET_ALL} {message}", flush=True)
 
 def log_mtgp(label: str) -> None:
     """
     Log card that was successfully downloaded from MTGP.
     """
-    console.print(f"{Fore.GREEN}MTGP DONE:{Style.RESET_ALL} {label}")
-
+    if not cfg.log_level == "NONE":
+        print(f"{Fore.GREEN}{Style.BRIGHT}MTGPICS SUCCESS:{Style.RESET_ALL} {label}", flush=True)
 
 def log_scryfall(label: str) -> None:
     """
     Log card that was successfully downloaded from Scryfall.
     """
-    console.print(f"{Fore.YELLOW}SCRYFALL:{Style.RESET_ALL} {label}")
-
+    if not cfg.log_level == "NONE":
+        print(f"{Fore.LIGHTGREEN_EX}{Style.DIM}SCRYFALL SUCCESS:{Style.RESET_ALL} {label}", flush=True)
 
 def log_failed(
     label: str,
     print_out: bool = True,
     write_log: bool = True,
-    filename: str = "failed",
+    filename: str = "failed_downloads",
     action: str = "MTGP",
 ) -> None:
     """
@@ -320,4 +331,4 @@ def log_failed(
         ) as f:
             f.write(f"{label}\n")
     if print_out:
-        console.print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}")
+        print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}", flush=True)
