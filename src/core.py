@@ -300,7 +300,7 @@ def log_mtgp(label: str) -> None:
     Log card that was successfully downloaded from MTGP.
     """
     if not cfg.log_level == "NONE":
-        print(f"{Fore.GREEN}{Style.BRIGHT}MTGPICS SUCCESS:{Style.RESET_ALL} {label}", flush=True)
+        print(f"{Fore.GREEN}{Style.BRIGHT}MTGP SUCCESS:{Style.RESET_ALL} {label}", flush=True)
 
 def log_scryfall(message: str, is_fallback: bool) -> None:
     """
@@ -311,9 +311,9 @@ def log_scryfall(message: str, is_fallback: bool) -> None:
     """
     if not cfg.log_level == "NONE":
         if is_fallback:
-            print(f"{Fore.LIGHTGREEN_EX}{Style.DIM}Scryfall Fallback SUCCESS:{Style.RESET_ALL} {message}", flush=True)
+            print(f"{Fore.LIGHTGREEN_EX}{Style.DIM}SCRY [Fallback] SUCCESS:{Style.RESET_ALL} {message}", flush=True)
         else:
-            print(f"{Fore.GREEN}{Style.BRIGHT}SCRYFALL SUCCESS:{Style.RESET_ALL} {message}", flush=True)
+            print(f"{Fore.GREEN}{Style.BRIGHT}SCRY SUCCESS:{Style.RESET_ALL} {message}", flush=True)
 
 def log_failed(
     label: str,
@@ -337,4 +337,4 @@ def log_failed(
         ) as f:
             f.write(f"{label}\n")
     if print_out:
-        print(f"{Fore.RED}{action} FAILED asd:{Style.RESET_ALL} {label}", flush=True)
+        print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}", flush=True)
