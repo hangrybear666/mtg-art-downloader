@@ -60,7 +60,7 @@ download_scryfall_full = config.getboolean(
 )
 
 # Download scryfall if MTGPics missing?
-download_scryfall = config.getboolean(
+download_scryfall_fallback = config.getboolean(
     "SETTINGS", "If.Missing.Download.Scryfall", fallback=True
 )
 

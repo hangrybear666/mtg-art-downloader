@@ -13,7 +13,7 @@ from unidecode import unidecode
 from src import settings as cfg
 from src import core
 from src.constants import con
-from src.core import log_failed, log_mtgp, log_scryfall, log_debug
+from src.core import log_failed, log_mtgp, log_scryfall, log_debug, log_info
 from src.fetch import get_scryfall_image, get_mtgp_image, get_mtgp_page
 from src.types import DownloadResult
 
@@ -201,19 +201,17 @@ class Card:
         """
         # Download only scryfall?
         if cfg.only_scryfall:
-            if self.download_scryfall(self.scry_url, self.scry_path, self.label):
+            if self.download_scryfall(self.scry_url, self.scry_path, self.label, False):
                 return [(True, self.label)]
             log_failed(self.label, action="SCRY")
             return [(False, self.label)]
 
         # Try downloading MTGP
         if not self.download_mtgp(self.mtgp_url, self.mtgp_path, self.label):
-            if (
-                cfg.download_scryfall
-                and self.download_scryfall(self.scry_url, self.scry_path, self.label)
-                and logging
-            ):
-                log_failed(self.label, print_out=True)
+            if cfg.download_scryfall_fallback:
+                if logging:
+                    log_failed(self.label)
+                self.download_scryfall(self.scry_url, self.scry_path, self.label, True)
             elif logging:
                 log_failed(self.label)
             return [(False, self.label)]
@@ -242,18 +240,19 @@ class Card:
 
     @staticmethod
     def download_scryfall(
-        url: Optional[str], path: Optional[str], label: Optional[str]
+        url: Optional[str], path: Optional[str], label: Optional[str], is_fallback: bool
     ) -> bool:
         """
         Download scryfall art crop from URL.
         @param url: URL to download image from.
         @param path: Path to save the image.
         @param label: Display label for card being downloaded.
+        @param is_fallback: Changes log output when used as failure fallback to mtgpics miss
         @return: True if successful, otherwise False.
         """
         if url and path:
             if get_scryfall_image(url, path):
-                log_scryfall(label)
+                log_scryfall(label, is_fallback)
                 return True
         return False
 
@@ -441,9 +440,7 @@ class MDFC(Card):
         # Download only scryfall?
         if cfg.only_scryfall:
             for i, scry_url in enumerate(self.scry_urls):
-                result = self.download_scryfall(
-                    scry_url, self.scry_paths[i], self.labels[i]
-                )
+                result = self.download_scryfall(scry_url, self.scry_paths[i], self.labels[i], False)
                 results.append((result, self.labels[i]))
                 if not result and logging:
                     log_failed(self.labels[i], action="SCRY")
@@ -456,10 +453,10 @@ class MDFC(Card):
             )
             if not result:
                 # Download Scryfall as a backup?
-                if cfg.download_scryfall and self.download_scryfall(
-                    scry_url, self.scry_paths[i], self.labels[i]
-                ):
-                    log_failed(self.labels[i], print_out=True)
+                if cfg.download_scryfall_fallback:
+                    if logging:
+                        log_failed(self.labels[i])
+                    self.download_scryfall(scry_url, self.scry_paths[i], self.labels[i], True)
                 elif logging:
                     log_failed(self.labels[i])
             results.append((result, self.labels[i]))

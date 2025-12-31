@@ -28,6 +28,7 @@ python main.py
 - Remember that you will get best results with clearly defined cards: `Card Name (SET) Number`
 - I recommend avoiding random promo sets, and definitely avoid the Pre-release/Promo versions of existing sets. For example if looking for Midnight Hunt
 cards make sure to use MID and not PMID!
+- To temporarily remove cards from processing simply add "#" at the beginning of the line
 
 # How to use with Scryfall commands?
 - After running the app, you can enter commands like so:

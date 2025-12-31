@@ -131,7 +131,13 @@ class Download:
 
     def start(self) -> list[tuple[bool, str]]:
         """
-        Using our card list, generate a download for each card.
+        Using our card list, generate a download for each card that is not commented out.
+
+        Skips the following lines:
+            - empty lines.
+            - lines with only spaces
+            - # at the beginning of the line
+
         @return: List of tuples, each containing success/fail state and name of the card.
         """
         # Do we have a valid card list?
@@ -139,13 +145,21 @@ class Download:
             print(f"{Fore.RED}---- NO CARD LIST FOUND! ----{Style.RESET_ALL}")
             return []
         if not self.is_test:
-            print(
-                f"{Fore.GREEN}---- Downloading {len(self.cards)} cards! ----{Style.RESET_ALL}"
-            )
+            # filter out empty lines and commented out lines
+            cards_to_process = [line for line in self.cards
+                                if len(line.strip()) > 1 and
+                                line.strip()[:1] is not "#"]
+            # log all filtered cards if log level is set to DEBUG
+            if len(cards_to_process) < len(self.cards):
+                log_debug(f"Filtered out {len(self.cards) - len(cards_to_process)} lines.")
+                log_debug(
+                    f"Filtered out lines (empty lines only counted once):\n"
+                    f"{set(self.cards) - set(cards_to_process)}")
 
         # Create a pool to execute these downloads
         with Pool(processes=cpu_count()) as pool:
-            downloads = pool.map(self.stage_download, self.cards)
+            log_info(f"===== Downloading {len(cards_to_process)} cards! =====")
+            downloads = pool.map(self.stage_download, cards_to_process)
 
         # Build results list
         results = []
@@ -181,11 +195,20 @@ class Download:
         """
         Tell the user the download process is complete.
         """
-        log_info(f"Downloads finished in {round(self.time,2)} seconds!")
+        if self.time < 10:
+            width = 35
+        elif self.time < 100:
+            width = 36
+        else:
+            width = 37
+        border = "=" * width
+
         log_info(
-            "All available files downloaded.\n"
-            "Check logs/failed_downloads.txt for misses.\n"
-            "Press enter to exit."
+            f"\n{border}\n"
+            f"Downloads finished in {Fore.CYAN}{Style.BRIGHT}{round(self.time, 2)}{Style.RESET_ALL} seconds!\n"
+            f"All available files downloaded.\n"
+            f"Check {Fore.CYAN}{Style.NORMAL}logs/failed_downloads.txt{Style.RESET_ALL} for misses.\n"
+            f"Press enter to exit."
         )
         input()
         sys.exit()
@@ -302,16 +325,17 @@ if __name__ == "__main__":
     print(" ██╔══██║██╔══██╗   ██║       ██║╚██╗██║██║   ██║██║███╗██║ ")
     print(" ██║  ██║██║  ██║   ██║       ██║ ╚████║╚██████╔╝╚███╔███╔╝ ")
     print(" ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝  ")
-    print(f"{Fore.CYAN}{Style.BRIGHT}MTG Art Downloader by Mr Teferi v1.3.0")
+    print(f"{Style.BRIGHT}MTG Art Downloader by Mr Teferi v1.3.0")
     print(f"Additional thanks to Trix are for Scoot, Chilli, and Gikkman")
-    print(f"Forked in Dec 2025 and modified by hangrybear666 {version}{Style.RESET_ALL}\n")
+    print(f"Forked in Dec 2025 and modified by hangrybear666 v{version}{Style.RESET_ALL}\n")
 
     # Does the user want to use Google Sheet queries or cards from txt file?
     choice = input(
-        "You can change Settings in config.ini.\n"
-        "Please view the README for detailed instructions.\n"
-        "Cards in cards.txt can either be listed as 'Phyrexian Tower' or 'Phyrexian Tower (MH3) 303'\n"
-        "Press ENTER to proceed with default settings.\n"
+        f"{Fore.CYAN}{Style.NORMAL}You can change Settings in config.ini.\n"
+        f"Please view the README for detailed instructions.\n"
+        f"Cards can either be listed as 'Phyrexian Tower' or 'Phyrexian Tower (MH3) 303'{Style.RESET_ALL}\n"
+        f"\nPress ENTER to proceed downloading the following cardlist: \n"
+        f"{cfg.cardlist}\n"
     )
 
     # If the command is valid, download based on that, otherwise cards.txt
