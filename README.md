@@ -11,7 +11,7 @@ Mass download MTG card arts using MTGPics with Scryfall as a backup source, down
   <a href="https://github.com/MrTeferi/MTG-Art-Downloader/releases">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/MrTeferi/MTG-Art-Downloader/total?style=plastic">
   </a>
-  <img alt="Python" src="https://img.shields.io/badge/python-3.6%2B-yellow?style=plastic">
+  <img alt="Python" src="https://img.shields.io/badge/python-3.11-yellow?style=plastic">
 </p>
 
 # Setup - Executable Release
@@ -24,32 +24,23 @@ even every card in Modern Horizons 2! Scroll down to the section on Scryfall com
 
 # Setup - Python Version
 We now use [poetry](https://python-poetry.org/docs/) for dependency management:
-- Have or Install Python 3.8+
+- Have or Install Python 3.9+
 - Have or Install poetry, you can use one of the following commands or [check out this install guide](https://python-poetry.org/docs/):
-```shell
-# WINDOWS (Powershell/Terminal)
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
-# WINDOWS (if you have Scoop)
-scoop install poetry
-
-# LINUX/MACOS (Or Windows if you have WSL)
-curl -sSL https://install.python-poetry.org | python3 -
-```
-- Download or clone this repository somewhere on your machine:
 ```shell
-git clone https://github.com/MrTeferi/MTG-Art-Downloader
-```
-- Next open a powershell/terminal in the MTG Art Downloader folder, enter `poetry install` to install our dependencies.
-- You can run MTG Art Downloader with one of the following commands:
-```shell
-# Run with poetry
+sudo dnf install python311
+cd ~/git
+git clone git@github.com:hangrybear666/mtg-art-downloader.git
+cd mtg-art-downloader
+python3.11 -m venv ./.venv
+source ./.venv/bin/activate
+pip install pipx
+pipx install poetry
+# add "package-mode = false" to pyproject.toml for [tool.poetry]
+poetry install
 poetry run python main.py
-
-# Enter poetry environment, then run with Python
-poetry shell
-py main.py
 ```
+
 - Alternatively you can get PyCharm which has native support for Poetry and can automatically start the app for you!
 
 # How to use with a Decklist
