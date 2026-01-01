@@ -41,8 +41,8 @@ os.system("")
 class Download:
     def __init__(
         self,
-        command: str = None,
-        card_list: Union[str, list] = None,
+        command: Optional[str] = None,
+        card_list: Optional[Union[str, list]] = None,
         testing: bool = False,
     ):
         self._testing: bool = testing
@@ -65,7 +65,8 @@ class Download:
         Return a card list either from given command or text file.
         """
         if self.command and ":" in self.command:
-            return get_list_from_scryfall(self.command)
+            result = get_list_from_scryfall(self.command)
+            return result if result is not None else []
         if self.command:
             if link := get_command(self.command):
                 return normalize_card_list(get_list_from_link(link))
@@ -89,6 +90,7 @@ class Download:
     #     |\/| |__   |  |__| /  \ |  \ /__`
     #     |  | |___  |  |  | \__/ |__/ .__/
 
+    @staticmethod
     def rotate_log_files():
         """
         Checks for existence of prior logfiles containing failed cards and insufficient dimensions.
@@ -163,12 +165,14 @@ class Download:
         if not self.cards:
             print(f"{Fore.RED}---- NO CARD LIST FOUND! ----{Style.RESET_ALL}")
             return []
+
+        cards_to_process: list[Union[dict, str]]
         if not self.is_test:
             # filter out empty lines and commented out lines
             remove_empty_and_commented_lines = [
                 line
                 for line in self.cards
-                if len(line.strip()) > 1 and line.strip()[:1] != "#"
+                if isinstance(line, str) and len(line.strip()) > 1 and line.strip()[:1] != "#"
             ]
             # remove lines including hashtags e.g. Moxfield tags
             remove_lines_with_tags = [
@@ -182,7 +186,8 @@ class Download:
                     f"Removed lines contain a hashtag in the midst - these are invalid:\n"
                     f"{set(remove_empty_and_commented_lines) - set(remove_lines_with_tags)}"
                 )
-            cards_to_process = remove_lines_with_tags
+            from typing import cast
+            cards_to_process = cast(list[Union[dict, str]], remove_lines_with_tags)
             # log all filtered out cards if log level is set to DEBUG
             if len(cards_to_process) < len(self.cards):
                 log_debug(

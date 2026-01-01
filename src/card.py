@@ -315,7 +315,8 @@ class Card:
         """
         if url and path:
             if get_mtgp_image(url, path):
-                log_mtgp(label)
+                if label:
+                    log_mtgp(label)
                 return True
         return False
 
@@ -333,7 +334,8 @@ class Card:
         """
         if url and path:
             if get_scryfall_image(url, path):
-                log_scryfall(label, is_fallback)
+                if label:
+                    log_scryfall(label, is_fallback)
                 return True
         return False
 

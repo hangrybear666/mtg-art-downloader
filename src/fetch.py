@@ -197,7 +197,7 @@ def get_mtgp_image(url: str, path: str):
             from src.core import log_debug, log_size_warning
 
             # Check file size in kilobytes
-            file_size_kb = round(os.path.getsize(path) / 1024, 0)
+            file_size_kb = int(round(os.path.getsize(path) / 1024, 0))
 
             # Check image dimensions
             try:

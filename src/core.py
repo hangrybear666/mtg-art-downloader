@@ -4,6 +4,7 @@ CORE FUNCTIONS
 
 import json
 import os
+from collections.abc import Sequence
 from typing import Optional, Union
 
 import requests
@@ -12,6 +13,7 @@ from pathlib import Path
 from colorama import Style, Fore
 from unidecode import unidecode
 from bs4 import BeautifulSoup
+from bs4.element import ResultSet, Tag
 from requests import RequestException
 from src import settings as cfg
 from src.fetch import get_cards_paged, get_mtgp_page
@@ -24,7 +26,7 @@ PRE-PROCESS DATA
 """
 
 
-def normalize_card_list(cards: list[Union[str, dict]]) -> list[Union[str, dict]]:
+def normalize_card_list(cards: Sequence[Union[str, dict]]) -> list[Union[str, dict]]:
     """
     Normalizes a list of cards, correcting for inconsistencies.
     @param cards: List of card names, with optional tags.
@@ -32,11 +34,17 @@ def normalize_card_list(cards: list[Union[str, dict]]) -> list[Union[str, dict]]
     """
     result: list[Union[str, dict]] = []
 
+    # Convert to list to allow modifications
+    cards_list = list(cards)
+
     # Remove empty lines
-    if "" in cards:
-        cards.remove("")
-    if " " in cards:
-        cards.remove(" ")
+    if "" in cards_list:
+        cards_list.remove("")
+    if " " in cards_list:
+        cards_list.remove(" ")
+
+    # Use the mutable list for iteration
+    cards = cards_list
 
     # Format each card
     for c in cards:
@@ -127,7 +135,15 @@ def get_mtgp_code(set_code: str, num: str, name: str) -> Optional[str]:
         r = get_mtgp_page(f"https://www.mtgpics.com/card?ref={set_code}001")
         soup = BeautifulSoup(r, "html.parser")
         soup_td = soup.find("td", {"width": "170", "align": "center"})
-        replaced = soup_td.find("a").get("href", "").replace("set?", "set_checklist?")
+        if soup_td is None:
+            return None
+        soup_a = soup_td.find("a")
+        if soup_a is None:
+            return None
+        href = soup_a.get("href", "")
+        if not isinstance(href, str):
+            return None
+        replaced = href.replace("set?", "set_checklist?")
         mtgp_link = f"https://mtgpics.com/{replaced}"
 
         # Crawl the set page to find the correct link
@@ -143,14 +159,30 @@ def get_mtgp_code(set_code: str, num: str, name: str) -> Optional[str]:
         # Look for collector number and name match
         for row in rows:
             cols = row.find_all("td")
+            if len(cols) < 3:
+                continue
             if cols[0].text == num and name in cols[2].text:
-                return cols[2].find("a")["href"].replace("card?ref=", "")
+                col_link = cols[2].find("a")
+                if col_link is None:
+                    continue
+                href = col_link.get("href", "")
+                if not isinstance(href, str):
+                    continue
+                return href.replace("card?ref=", "")
 
         # Collector number doesn't match, look only for the name
         for row in rows:
             cols = row.find_all("td")
+            if len(cols) < 3:
+                continue
             if name in cols[2].text:
-                return cols[2].find("a")["href"].replace("card?ref=", "")
+                col_link = cols[2].find("a")
+                if col_link is None:
+                    continue
+                href = col_link.get("href", "")
+                if not isinstance(href, str):
+                    continue
+                return href.replace("card?ref=", "")
 
     except (KeyError, TypeError, IndexError, AttributeError):
         pass
@@ -193,28 +225,40 @@ def get_mtgp_code_pmo(
         )
         for row in rows:
             cols = row.find_all("td")
+            if len(cols) < 7:
+                continue
             if (
                 artist in unidecode(cols[6].text)
                 and name.lower() in cols[2].text.lower()
             ):
+                col_link = cols[2].find("a") if len(cols) > 2 else None
+                if col_link is None:
+                    continue
+                href = col_link.get("href", "")
+                code = href.replace("card?ref=", "") if isinstance(href, str) else ""
+                if not code:
+                    continue
                 matches.append(
                     {
-                        "code": cols[2]
-                        .find("a")
-                        .get("href", "")
-                        .replace("card?ref=", ""),
+                        "code": code,
                         "match": SequenceMatcher(
                             a=cols[2].text.replace(name, ""), b=set_name
                         ).ratio(),
                     }
                 )
-        return sorted(matches, key=lambda i: i["match"], reverse=True)[0]["code"]
+        if not matches:
+            return None
+        # Type-safe sorting: cast to appropriate type
+        from typing import cast
+        sorted_matches = sorted(matches, key=lambda i: cast(float, i["match"]), reverse=True)
+        code_value = sorted_matches[0]["code"]
+        return str(code_value) if code_value else None
     except (KeyError, TypeError, IndexError, AttributeError):
         pass
     return None
 
 
-def get_card_face(entries: list[dict], back: bool = False) -> Optional[str]:
+def get_card_face(entries: ResultSet[Tag], back: bool = False) -> Optional[str]:
     """
     Determine which image URL is most likely correct on MTGP.
     @param entries: Image URLs available for this card on MTGP.
@@ -228,12 +272,17 @@ def get_card_face(entries: list[dict], back: bool = False) -> Optional[str]:
 
     # Format the image path
     arr = []
-    path = f"https://mtgpics.com/{os.path.dirname(entries[0]['src'])}"
+    first_src = entries[0].get("src", "")
+    if not isinstance(first_src, str):
+        return None
+    path = f"https://mtgpics.com/{os.path.dirname(first_src)}"
     path = path.replace("art_th", "art")
 
     # Isolate the image code
     for e in entries:
-        arr.append(os.path.basename(e["src"]).replace(".jpg", ""))
+        src = e.get("src", "")
+        if isinstance(src, str):
+            arr.append(os.path.basename(src).replace(".jpg", ""))
 
     # Strategy based on number of entries
     if len(arr) == 1:
