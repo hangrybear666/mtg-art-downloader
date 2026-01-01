@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.append(str(Path(os.getcwd())))
 os.chdir(str(Path(os.getcwd()).resolve()))
 import main as app
-import core
+from src import core
 
 
 def test_normal_cards():

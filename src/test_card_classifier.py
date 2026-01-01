@@ -17,7 +17,7 @@ sys.path.append(str(Path(os.getcwd())))
 os.chdir(str(Path(os.getcwd()).resolve()))
 
 import pytest
-from card_classifier import CardClassifier, get_classified_folder_path
+from src.card_classifier import CardClassifier, get_classified_folder_path
 
 
 class TestTypePrecedence:
