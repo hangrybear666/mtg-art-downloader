@@ -81,10 +81,14 @@ overwrite = config.getboolean("SETTINGS", "Overwrite.Same.Name", fallback=True)
 download_all = config.getboolean("SETTINGS", "Download.All", fallback=False)
 
 # Enable card classification by type and color identity?
-enable_classification = config.getboolean("SETTINGS", "Enable.Card.Classification", fallback=True)
+enable_classification = config.getboolean(
+    "SETTINGS", "Enable.Card.Classification", fallback=True
+)
 
 # Hardcodes simultaneous Pool processes to 1 to enable sequential processing
-disable_multithreading = config.getboolean("SETTINGS", "Disable.Multithreading.Parallelism", fallback=False)
+disable_multithreading = config.getboolean(
+    "SETTINGS", "Disable.Multithreading.Parallelism", fallback=False
+)
 
 #     __   ___       __   __
 #    /__` |__   /\  |__) /  ` |__|
@@ -111,5 +115,9 @@ unique = (
 include_extras = str(config.getboolean("SEARCH", "Include.Extras", fallback=True))
 
 # log output warnings when card dimensions are not sufficient for printing
-card_width_warning_limit = int(config.getint("SEARCH", "Card.Dimension.Warning.Width", fallback=633))
-card_height_warning_limit = int(config.getint("SEARCH", "Card.Dimension.Warning.Height", fallback=471))
+card_width_warning_limit = int(
+    config.getint("SEARCH", "Card.Dimension.Warning.Width", fallback=633)
+)
+card_height_warning_limit = int(
+    config.getint("SEARCH", "Card.Dimension.Warning.Height", fallback=471)
+)

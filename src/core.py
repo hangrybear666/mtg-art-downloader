@@ -302,6 +302,7 @@ def log_debug(message: str) -> None:
             flush=True,
         )
 
+
 def log_warning(message: str) -> None:
     """
     WARNING messages to notify of errors in e.g. cards.txt
@@ -311,6 +312,7 @@ def log_warning(message: str) -> None:
             f"{Fore.YELLOW}{Style.BRIGHT}WARNING:{Style.RESET_ALL} {message}",
             flush=True,
         )
+
 
 def log_mtgp(label: str) -> None:
     """
@@ -367,6 +369,7 @@ def log_failed(
     if print_out:
         print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}", flush=True)
 
+
 def log_size_warning(
     file: str,
     size: int,
@@ -395,4 +398,7 @@ def log_size_warning(
         ) as f:
             f.write(f"{file}\n[{size}kb] [{width}x{height}]\n")
     if print_out:
-        print(f"{Fore.YELLOW}{Style.BRIGHT}{action} INSUFFICIENT DIMENSIONS:{Style.RESET_ALL} {width}px x {height}px for {file}", flush=True)
+        print(
+            f"{Fore.YELLOW}{Style.BRIGHT}{action} INSUFFICIENT DIMENSIONS:{Style.RESET_ALL} {width}px x {height}px for {file}",
+            flush=True,
+        )

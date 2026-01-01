@@ -1,7 +1,9 @@
 """
 GLOBAL CONSTANTS
 """
+
 from dataclasses import dataclass
+
 
 @dataclass
 class Constants:

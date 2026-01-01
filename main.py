@@ -37,6 +37,7 @@ detailed_reg = re.compile(r"(.*) \((.*)\) ?(.*)")
 cwd = os.getcwd()
 os.system("")
 
+
 class Download:
     def __init__(
         self,
@@ -116,8 +117,12 @@ class Download:
                 if len(lines) > 1:
                     # File has actual failures (Header + Content) -> Rotate
                     mtime = os.path.getmtime(log_file_path)
-                    timestamp_str = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d_%H-%M-%S")
-                    new_name = os.path.join(log_dir, f"failed_downloads-{timestamp_str}.txt")
+                    timestamp_str = datetime.fromtimestamp(mtime).strftime(
+                        "%Y-%m-%d_%H-%M-%S"
+                    )
+                    new_name = os.path.join(
+                        log_dir, f"failed_downloads-{timestamp_str}.txt"
+                    )
                     os.rename(log_file_path, new_name)
                 else:
                     # File is empty or only has header -> Delete
@@ -130,7 +135,9 @@ class Download:
             try:
                 os.remove(dimensions_file_path)
             except OSError as e:
-                print(f"{Fore.RED}Error deleting dimensions log file: {e}{Style.RESET_ALL}")
+                print(
+                    f"{Fore.RED}Error deleting dimensions log file: {e}{Style.RESET_ALL}"
+                )
 
         # 3. Create new log files with Europe/Berlin Timezone Header
         try:
@@ -158,21 +165,33 @@ class Download:
             return []
         if not self.is_test:
             # filter out empty lines and commented out lines
-            remove_empty_and_commented_lines = [line for line in self.cards if len(line.strip()) > 1 and line.strip()[:1] != "#"]
+            remove_empty_and_commented_lines = [
+                line
+                for line in self.cards
+                if len(line.strip()) > 1 and line.strip()[:1] != "#"
+            ]
             # remove lines including hashtags e.g. Moxfield tags
-            remove_lines_with_tags = [line for line in remove_empty_and_commented_lines if not "#" in line]
+            remove_lines_with_tags = [
+                line for line in remove_empty_and_commented_lines if not "#" in line
+            ]
             if len(remove_lines_with_tags) < len(remove_empty_and_commented_lines):
-                log_warning(f"Removed {len(remove_empty_and_commented_lines) - len(remove_lines_with_tags)} lines.")
+                log_warning(
+                    f"Removed {len(remove_empty_and_commented_lines) - len(remove_lines_with_tags)} lines."
+                )
                 log_warning(
                     f"Removed lines contain a hashtag in the midst - these are invalid:\n"
-                    f"{set(remove_empty_and_commented_lines) - set(remove_lines_with_tags)}")
+                    f"{set(remove_empty_and_commented_lines) - set(remove_lines_with_tags)}"
+                )
             cards_to_process = remove_lines_with_tags
             # log all filtered out cards if log level is set to DEBUG
             if len(cards_to_process) < len(self.cards):
-                log_debug(f"Filtered out {len(self.cards) - len(cards_to_process)} lines.")
+                log_debug(
+                    f"Filtered out {len(self.cards) - len(cards_to_process)} lines."
+                )
                 log_debug(
                     f"Filtered out lines (empty lines only counted once):\n"
-                    f"{set(self.cards) - set(cards_to_process)}")
+                    f"{set(self.cards) - set(cards_to_process)}"
+                )
         else:
             # In test mode, use cards as-is without filtering
             cards_to_process = self.cards
@@ -320,6 +339,7 @@ class Download:
         card_class = dl.get_card_class(card)
         return card_class(card).download(not self.is_test)
 
+
 #    ___  ___  ___  _____ _   _
 #    |  \/  | / _ \|_   _| \ | |
 #    | .  . |/ /_\ \ | | |  \| |
@@ -334,7 +354,6 @@ if __name__ == "__main__":
     Path(cfg.download_folder).mkdir(mode=511, parents=True, exist_ok=True)
     Path(cfg.mtgp).mkdir(mode=511, parents=True, exist_ok=True)
     Path(cfg.scry).mkdir(mode=511, parents=True, exist_ok=True)
-
 
     # Welcome page
     print(f"{Fore.MAGENTA}{Style.NORMAL}\n")
@@ -352,7 +371,9 @@ if __name__ == "__main__":
     print(" ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝  ")
     print(f"{Style.BRIGHT}MTG Art Downloader by Mr Teferi v1.3.0")
     print(f"Additional thanks to Trix are for Scoot, Chilli, and Gikkman")
-    print(f"Forked in Dec 2025 and modified by hangrybear666 v{version}{Style.RESET_ALL}\n")
+    print(
+        f"Forked in Dec 2025 and modified by hangrybear666 v{version}{Style.RESET_ALL}\n"
+    )
 
     # Does the user want to use Google Sheet queries or cards from txt file?
     choice = input(

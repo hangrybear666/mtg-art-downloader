@@ -203,10 +203,16 @@ def get_mtgp_image(url: str, path: str):
             try:
                 with Image.open(path) as img:
                     width, height = img.size
-                    if width < cfg.card_width_warning_limit or height < cfg.card_height_warning_limit:
+                    if (
+                        width < cfg.card_width_warning_limit
+                        or height < cfg.card_height_warning_limit
+                    ):
                         # Python ternary: value_if_true if condition else value_if_false
                         log_size_warning(
-                            os.path.basename(path), file_size_kb, width, height,
+                            os.path.basename(path),
+                            file_size_kb,
+                            width,
+                            height,
                             action="MTGP",
                         )
             except Exception as e:

@@ -1,6 +1,7 @@
 """
 SCRIPT TO BUILD MTG ART DOWNLOADER AS EXECUTABLE
 """
+
 import os
 import sys
 import zipfile
