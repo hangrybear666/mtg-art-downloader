@@ -12,9 +12,9 @@ from PIL import Image
 from ratelimit import RateLimitDecorator, sleep_and_retry
 from requests import RequestException, Timeout
 
-# RateLimiter objects
-scryfall_rate_limit = RateLimitDecorator(calls=20, period=1)
-mtgp_rate_limit = RateLimitDecorator(calls=20, period=1)
+# RateLimiter objects with calls per period (seconds)
+scryfall_rate_limit = RateLimitDecorator(calls=20, period=2.0)
+mtgp_rate_limit = RateLimitDecorator(calls=10, period=2.0)
 
 # Default timeout for all network requests (in seconds)
 TIMEOUT = 10

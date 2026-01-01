@@ -80,6 +80,9 @@ overwrite = config.getboolean("SETTINGS", "Overwrite.Same.Name", fallback=True)
 # Download all images available or just most recent?
 download_all = config.getboolean("SETTINGS", "Download.All", fallback=False)
 
+# Enable card classification by type and color identity?
+enable_classification = config.getboolean("SETTINGS", "Enable.Card.Classification", fallback=True)
+
 #     __   ___       __   __
 #    /__` |__   /\  |__) /  ` |__|
 #    .__/ |___ /~~\ |  \ \__, |  |

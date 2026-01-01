@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "MTG-Art-Downloader"
-version = "v1.5.1"
+version = "v1.5.2"
 description = "Mass download MTG card arts using MTG Pics with Scryfall as a backup source."
 authors = ["MrTeferi <freethoughtleft@gmail.com>"]
 license = "GNU General Public License v3.0"

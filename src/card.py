@@ -17,6 +17,7 @@ from src.constants import con
 from src.core import log_failed, log_mtgp, log_scryfall, log_debug, log_info
 from src.fetch import get_scryfall_image, get_mtgp_image, get_mtgp_page
 from src.types import DownloadResult
+from src.card_classifier import CardClassifier
 
 cwd = os.getcwd()
 
@@ -36,6 +37,10 @@ class Card:
         # Store all card info
         self.c = c
         self._promo = False
+
+        # Apply classification if enabled (before folder creation)
+        if cfg.enable_classification:
+            self._apply_classification()
 
         # Create download folders if needed
         Path(os.path.join(cfg.mtgp, self.path)).mkdir(
@@ -179,6 +184,79 @@ class Card:
     """
     METHODS
     """
+
+    def _apply_classification(self) -> None:
+        """
+        Apply type and color identity classification to override folder paths.
+
+        This method modifies the instance's path and path_back attributes based on
+        the card's type_line and color_identity using the CardClassifier.
+
+        The classification respects existing subclass behavior for special layouts
+        (MDFC, Transform, etc.) by appending to the classified base path.
+        """
+        classifier = CardClassifier(self.c)
+        classified_path = classifier.get_classified_folder_path()
+
+        # Log classification for debugging
+        if cfg.log_level == "DEBUG":
+            info = classifier.get_classification_info()
+            log_debug(
+                f"Classifying {self.c.get('name', 'Unknown')}: "
+                f"Type={info['primary_type']}, Color={info['color_folder']}, "
+                f"Path={classified_path}"
+            )
+
+        # For most cards, replace the entire path with classified path
+        # Special handling for cards with existing subclass paths:
+
+        # BasicLand and Land classes: Already handled by classifier
+        # Token class: Already handled by classifier (Token priority)
+        if self.__class__.__name__ in ["BasicLand", "Land", "Token"]:
+            # Classifier already returns correct path, strip trailing slash
+            self.path = classified_path.rstrip("/")
+            return
+
+        # For layout-specific subclasses (MDFC, Transform, Split, etc.),
+        # we need to preserve the front/back distinction while applying classification
+        if self.path_back:
+            # This is a dual-faced card - preserve the front/back suffix
+            # Extract the suffix from the original path
+            original_path = self.__class__.path
+            original_path_back = self.__class__.path_back
+
+            # For MDFC, Transform, etc., append the type to classified path
+            # Example: "Multicolor/MDFC Front" instead of just "MDFC Front"
+            base_classified = classified_path.rstrip("/")
+
+            # Extract just the layout descriptor (e.g., "MDFC Front", "TF Front")
+            if " " in original_path:
+                layout_suffix = original_path
+                self.path = f"{base_classified}/{layout_suffix}"
+            else:
+                self.path = f"{base_classified}/{original_path}"
+
+            if " " in original_path_back:
+                layout_suffix_back = original_path_back
+                self.path_back = f"{base_classified}/{layout_suffix_back}"
+            else:
+                self.path_back = f"{base_classified}/{original_path_back}"
+        else:
+            # Single-faced card with potential layout type (Adventure, Flip, etc.)
+            if self.__class__.__name__ == "Card":
+                # Base Card class - use classification directly
+                self.path = classified_path.rstrip("/")
+            else:
+                # Layout-specific single-faced card (Adventure, Flip, Saga, etc.)
+                base_classified = classified_path.rstrip("/")
+                original_path = self.__class__.path
+
+                if original_path:
+                    # Append layout type to classified path
+                    self.path = f"{base_classified}/{original_path}"
+                else:
+                    # No original path, use classification only
+                    self.path = base_classified
 
     def generate_path(self, path: str, name: str, artist: str):
         """

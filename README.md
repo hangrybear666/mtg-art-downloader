@@ -59,12 +59,93 @@ cards make sure to use MID and not PMID!
 - You can increase or decrease threads added per second depending on the speed of your internet.
 - You can choose the naming convention for saving the downloaded images.
 - You can limit card dimensions by width and height to issue log file warnings in case of images being too small
+- You can toggle a comprehensive card classification system that organizes downloads into types and color identities
+
+## Card Classification System
+
+The MTG Art Downloader now includes an advanced card classification system that automatically organizes downloaded card artwork based on card type and color identity. This system uses data from the Scryfall API (already fetched during the normal download process) to classify cards without making additional API requests.
+
+INFO: can be disabled in `config.ini` via `Enable.Card.Classification = false`
+
+### Type Precedence Rules
+
+- **Type Precedence System**: Organizes cards by type with a strict precedence hierarchy
+- **Color Identity Classification**: Separates cards by color within appropriate folders
+- **Type Precedence Rules**: Token > Land > Enchantment > Artifact > Other
+
+### Precedence Examples
+
+1. **Token has absolute priority**
+   - "Token Artifact Enchantment Land" → `Token/` folder
+   - All tokens go to `Token/{color_identity}/` regardless of other types
+
+2. **Land takes precedence over Enchantment and Artifact**
+   - "Artifact Land" → `Land/` folder (not `Artifact/`)
+   - "Enchantment Land — Saga" (Urza's Saga) → `Land/` folder
+
+3. **Enchantment takes precedence over Artifact**
+   - "Legendary Artifact Enchantment" → `Enchantment/{color_identity}/` folder
+   - "Enchantment Creature — God" → `Enchantment/{color_identity}/` folder
+
+4. **Artifact stands alone**
+   - "Artifact — Equipment" → `Artifact/` folder (no color subfolders)
+   - "Artifact Creature" → `Artifact/` folder
+
+5. **Other cards go to root color folders**
+   - Creatures, Sorceries, Instants, Planeswalkers → `{color_identity}/` folder
+
+### Special Cases
+
+- **Basic Lands**: Always go to `Basic/` folder (not `Land/`)
+- **Artifact folder**: Never uses color subfolders (all artifacts together)
+- **Land folder**: Never uses color subfolders (all non-basic lands together)
+
+### Example 1: Subtypes separated by Color Identity
+```
+downloaded/mtgpics/Enchantment/
+├── White/          # White token creatures
+├── Blue/           # Blue token creatures
+├── Black/          # Black token creatures
+├── Red/            # Red token creatures
+├── Green/          # Green token creatures
+├── Multicolor/     # Multicolor tokens
+└── Colorless/      # Colorless artifact tokens (Treasure, Clue, etc.)
+downloaded/mtgpics/Token/
+└──same as above
+```
+
+### Example 2: Root-Level Color Organization
+```
+downloaded/mtgpics/
+├── White/          # White creatures, sorceries, instants, planeswalkers
+├── Blue/           # Blue spells
+├── Black/          # Black spells
+├── Red/            # Red spells (Lightning Bolt, etc.)
+├── Green/          # Green spells
+├── Multicolor/     # Multicolor creatures and spells
+├── Colorless/      # Colorless Eldrazi, etc.
+├── Artifact/       # All artifacts (no color subfolders)
+├── Land/           # All non-basic lands
+├── Basic/          # All basic lands
+├── Enchantment/    # (see Example 1)
+└── Token/          # (see Example 1)
+```
 
 ## Testing
-- You can test the app for consistency with:
-```shell
+
+- You can test the main app with:
+
+```bash
+source .venv/bin/activate
 pytest src/tests.py
 ```
+- You can test the card classifier  with:
+
+```bash
+source .venv/bin/activate
+pytest src/test_card_classifier.py -v
+```
+
 - You can run a mypy typechecking test with:
 ```shell
 mypy main.py build.py src

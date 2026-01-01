@@ -1,23 +1,360 @@
-# Azorius Signet
-Battlefield Forge (FIC) 375
-Birds of Paradise (8ED) 233
-Brushland (LTC) 297
-
-#
-#
-#
-#Caves of Koilos (10E) 350
-#City of Brass (ARN) 71
-Clifftop Retreat (FIC) 381
-Command Tower (ELD) 333
-Horizon Canopy (IMA) 240
-Selesnya Signet (SLD) 290
-Sulfur Falls (LTC) 333
-Sulfurous Springs (LTC) 334
-# Sunbaked Canyon (MH1) 247
-# Sunpetal Grove (LTC) 336
-# Talisman of Conviction (SLD) 1060
-# Talisman of Creativity (SLD) 1058
-# Verdant Catacombs (SLU) 3
-# Windswept Heath (ONS) 328
-Ziatora's Proving Ground (SNC) 261
+Aang's Shelter (TLE) 7
+Abrade (2XM) 114
+Abrupt Decay (OTP) 34
+Academy Rector (UDS) 1
+Adeline, Resplendent Cathar (MID) 1
+Altar of Dementia (CNS) 196
+Anafenza, Kin-Tree Spirit (CMM) 11
+Anax, Hardened in the Forge (THB) 125
+Ancestral Vision (TDC) 144
+Ancient Brass Dragon (CLB) 111
+Ancient Bronze Dragon (CLB) 214
+Ancient Gold Dragon (CLB) 376
+Ancient Silver Dragon (CLB) 56
+Ancient Tomb (UMA) 236
+Arid Mesa (MM3) 229 #!Fetch Lands
+Athreos, God of Passage (PLST) JOU-146
+Atraxa, Praetors' Voice (2XM) 190
+Austere Command (2XM) 7
+Avenger of Zendikar (CMR) 422
+Azorius Signet (C20) 238 #!Signets
+Balance (PLST) EMA-2
+Baleful Mastery (STX) 64
+Baleful Strix (PCA) 82
+Basilisk Collar (PLST) MM3-216
+Batterskull (SLD) 1206
+Bayou (3ED) 283
+Beast Within (PLST) BBD-190
+Birds of Paradise (DMR) 151 #!Green Ramp
+Bitterblossom (WOT) 72
+Bituminous Blast (PLST) PCA-83
+Black Lotus (2ED) 233
+Blood Crypt (ECL) 262 #!Shock Lands
+Bloodbraid Elf (PLST) PCA-84
+Bloodghast (LCC) 184
+Bloodstained Mire (MH3) 216 #!Fetch Lands
+Boros Signet (C20) 239 #!Signets
+Braids, Cabal Minion (MH2) 273
+Brain Freeze (MB2) 24
+Brainstorm (2XM) 44
+Bribery (TLE) 10
+Bring to Light (2X2) 188
+Brought Back (TLE) 1
+Burgeoning (SPG) 126
+Burning of Xinye (PTK) 104
+Burst Lightning (MM2) 109
+Capsize (TMP) 55
+Celestial Colonnade (WHO) 260
+Chain Lightning (BBD) 171
+Chain Reaction (AFC) 116
+Chandra, Torch of Defiance (Q06) 6
+Chandra's Ignition (LCC) 220
+Chaos Warp (C19) 136
+Chromatic Lantern (M3C) 285
+Chrome Mox (EMA) 219
+City of Brass (MD1) 15 #!Multicolor Lands
+Coalition Relic (TSR) 266
+Coercive Portal (CNS) 56
+Collected Company (MB2) 203
+Collective Brutality (PLST) EMN-85
+Combustible Gearhulk (KLD) 112
+Conflagrate (UMA) 126
+Conflux (A25) 202
+Cordyceps Excision (SLD) 2199
+Council's Judgment (CLU) 57
+Counterspell (PLST) A25-50
+Courser of Kruphix (J22) 641
+Craterhoof Behemoth (MM3) 122
+Creeping Tar Pit (UMA) 239
+Crucible of Worlds (M19) 229
+Cruel Ultimatum (OTP) 40
+Crypt Ghast (RVR) 322
+Cryptic Command (IMA) 48
+Curse of the Swine (KHC) 37
+Dack Fayden (SLD) 251
+Damnation (SLD) 121
+Daretti, Scrap Savant (PLST) C14-33
+Dark Confidant (RVR) 323
+Dark Depths (M3C) 334
+Dark Petition (ORI) 90
+Dark Ritual (4ED) 129
+Death's Shadow (MB2) 180
+Deflecting Palm (KTK) 173
+Delay (TSR) 61
+Demonic Tutor (PLST) DDC-49
+Deranged Hermit (ULG) 101
+Diabolic Intent (BRO) 89
+Digsite Engineer (BRC) 71
+Dimir Signet (MKC) 226 #!Signets
+Dismember (PLST) MM2-79
+Dockside Extortionist (TLE) 28
+Doubling Season (BBD) 195
+Dragon of Mount Gulg (FCA) 12
+Dragonlord Atarka (DTK) 216
+Dragonlord Dromoka (TDC) 286
+Dualcaster Mage (EMA) 127
+Edric, Spymaster of Trest (OTC) 221
+Eidolon of the Great Revel (PLST) JOU-94
+Elesh Norn, Grand Cenobite (SLD) 209
+Elite Spellbinder (STX) 17
+Elspeth, Sun's Champion (BLC) 97
+Empty the Warrens (MMA) 112
+Emrakul, the Aeons Torn (2X2) 1
+Emrakul, the Promised End (INR) 330
+Endurance (MH2) 157
+Engineered Explosives (UMA) 227
+Enlightened Tutor (PLST) MIR-14
+Ensnaring Bridge (MB2) 219
+Esper Sentinel (MH2) 328
+Eternal Witness (CMM) 286
+Experimental Frenzy (GRN) 99
+Exploration (CNS) 164
+Fabled Passage (ELD) 244
+Fastbond (3ED) 194
+Fatal Push (2XM) 93
+Field of Ruin (PLST) XLN-254
+Field of the Dead (SLC) 6
+Fiery Confluence (CM2) 98
+Fist of Suns (PLST) C17-211
+Flame Slash (PLST) DDK-60
+Flooded Strand (KTK) 233 #!Fetch Lands
+Flusterstorm (MH1) 255
+Food Chain (2X2) 147
+Force of Will (DMR) 50
+Fractured Identity (WHO) 236
+Frost Titan (M12) 55
+Gaea's Cradle (USG) 321
+Garruk, Primal Hunter (C19) 167
+Generous Gift (NEC) 84
+Genesis Hydra (C20) 172
+Genesis Ultimatum (IKO) 189
+Gideon, Ally of Zendikar (BFZ) 29
+Gideon, Champion of Justice (C21) 93
+Gifts Ungiven (2X2) 51
+Glen Elendra Archmage (UMA) 58
+Glint-Horn Buccaneer (M20) 141
+Goblin Welder (SLD) 1617
+Golgari Signet (MM3) 220 #!Signets
+Golos, Tireless Pilgrim (M20) 226
+Goryo's Vengeance (UMA) 99
+Grave Titan (DRC) 42
+Greater Gargadon (2X2) 111
+Green Sun's Zenith (2X2) 150
+Grim Monolith (ULG) 126
+Griselbrand (MM3) 72
+Growth Spiral (C20) 216
+Gruul Signet (PLST) C16-256 #!Signets
+Hangarback Walker (CMM) 951
+Hero of Bladehold (MOC) 188
+Hope's Aero Magic (SLD) 1869
+Hullbreaker Horror (PVOW) 63p
+Ignoble Hierarch (MH2) 166
+Imperial Recruiter (2XM) 131
+Imperial Seal (2X2) 79
+Increasing Vengeance (C19) 147
+Indatha Triome (IKO) 248 #!Triomes
+Ingenious Smith (AFR) 21
+Inkwell Leviathan (C18) 91
+Inquisition of Kozilek (PLST) MM3-75
+Inspired Ultimatum (PIKO) 191p
+Intrepid Adversary (MID) 25
+Iona, Shield of Emeria (MB2) 12
+Izzet Signet (GK1) 46 #!Signets
+Jace, the Mind Sculptor (2XM) 56
+Jetmir's Garden (SNC) 250 #!Triomes
+Jodah, Archmage Eternal (DOM) 198
+K'rrik, Son of Yawgmoth (PLST) C19-18
+Kaldra Compleat (MH2) 379
+Karn Liberated (2XM) 1
+Kenrith, the Returned King (MB2) 13
+Ketria Triome (PIKO) 250p #!Triomes
+Kitchen Finks (UMA) 216
+Kolaghan's Command (PLST) DTK-224
+Kor Skyfisher (MM3) 11
+Korvold, Fae-Cursed King (EOC) 120
+Koth of the Hammer (SOM) 94
+Kozilek, Butcher of Truth (2X2) 2
+Land Tax (CMM) 37
+Leovold, Emissary of Trest (PLST) CN2-77
+Life from the Loam (UMA) 172
+Lifelong Friendship (TLE) 48
+Lightning Bolt (CLB) 401
+Lightning Helix (PLST) GK1-90
+Liliana of the Veil (DMU) 97
+Lingering Souls (PLST) MM3-12
+Lion's Eye Diamond (MIR) 307
+Living Death (TDC) 185
+Lotus Cobra (ZNR) 307
+Maelstrom Archangel (PLST) CON-115
+Maelstrom Nexus (PLIST) 218
+Maelstrom Pulse (UMA) 204
+Maelstrom Wanderer (CMM) 344
+Magmatic Channeler (ZNR) 148
+Magus of the Disk (C20) 94
+Mana Confluence (EOS) 25 #!Multicolor Lands
+Mana Crypt (PLST) EMA-225
+Mana Drain (2X2) 57
+Mana Flare (WOT) 46
+Mana Vault (5ED) 388
+Marsh Flats (MH2) 476 #!Fetch Lands
+Memory Jar (ULG) 129
+Metalworker (UDS) 135
+Midnight Reaper (SCD) 91
+Mind Over Matter (EXO) 40
+Mind's Desire (DDS) 4
+Mirari's Wake (CNS) 189
+Mirror Entity (CLB) 701
+Misty Rainforest (MM3) 240 #!Fetch Lands
+Monastery Mentor (2X2) 21
+Monastery Swiftspear (BRO) 144
+Mother of Runes (PLST) DDO-20
+Mox Diamond (STH) 138
+Mox Emerald (2ED) 262
+Mox Jet (2ED) 263
+Mox Opal (SOM) 179
+Mox Pearl (2ED) 264
+Mox Ruby (2ED) 265
+Mox Sapphire (2ED) 266
+Mulldrifter (C20) 117
+Mystic Remora (DMR) 59
+Mystic Snake (A25) 208
+Narset, Enlightened Master (KTK) 190
+Necropotence (5ED) 182
+Nekusar, the Mindrazer (CMM) 349
+Nevinyrral's Disk (MH2) 298
+Nissa, Who Shakes the World (SLD) 1042
+Noble Hierarch (UMA) 174
+Nyxbloom Ancient (THB) 190
+Oath of Druids (MB2) 212
+Oblivion Ring (MM2) 29
+Omnath, Locus of Mana (CC1) 2
+Omniscience (M19) 65
+Opt (ELD) 59
+Oracle of Mul Daya (OTC) 200
+Orzhov Signet (MM3) 224 #!Signets
+Painful Truths (MOC) 262
+Palinchron (ULG) 38
+Paradoxical Outcome (KLD) 60
+Parallel Lives (MAR) 36
+Past in Flames (TSR) 350
+Path to Exile (NCC) 208
+Pest Infestation (EOC) 103
+Phyrexian Arena (PLST) CN2-144
+Phyrexian Metamorph (PLST) NPH-42
+Phyrexian Tower (UMA) 248 #!Utility Lands
+Pithing Needle (MID) 257
+Plateau (3ED) 284
+Polluted Delta (MH3) 224 #!Fetch Lands
+Ponder (C21) 125
+Portal to Phyrexia (BRO) 240
+Preordain (PLST) C15-101
+Primal Command (OTP) 31
+Primeval Titan (TSR) 365
+Prismatic Ending (MH2) 25
+Prismatic Vista (MH1) 244 #!Multicolor Lands
+Prophetic Flamespeaker (JOU) 106
+Prossh, Skyraider of Kher (C13) 204
+Punishing Fire (DDG) 66
+Putrefy (PLST) GK1-68
+Raffine's Tower (SNC) 254 #!Triomes
+Rakdos Signet (DSC) 250 #!Signets
+Rampaging Ferocidon (DSC) 167
+Ramunap Excavator (HOU) 129
+Ranger-Captain of Eos (PLST) MH1-21
+Raugrin Triome (PIKO) 251p #!Triomes
+Reanimate (JMP) 270
+Reclamation Sage (CMR) 248
+Recurring Nightmare (EXO) 72
+Rofellos, Llanowar Emissary (UDS) 118
+Saheeli Rai (PLST) KLD-186
+Savai Triome (IKO) 312 #!Triomes
+Savannah (3ED) 285
+Scalding Tarn (SLU) 2 #!Fetch Lands
+Scrubland (3ED) 286
+Seasoned Pyromancer (MH1) 145
+Second Sunrise (PLST) MRD-20
+Selesnya Signet (C13) 257 #!Signets
+Serra Paragon (DMU) 32
+Serum Visions (CN2) 120
+Sheoldred, the Apocalypse (DMU) 369
+Sheoldred, Whispering One (JMP) 278
+Show and Tell (MB2) 171
+Simic Signet (MM3) 227 #!Signets
+Smokestack (SLC) 1998
+Snapcaster Mage (ISD) 78
+Sneak Attack (EMA) 148
+Snuff Out (WHO) 222
+Sol Ring (C19) 221 #!Mana Artifacts
+Solemn Simulacrum (DDU) 62
+Solitude (MH2) 32
+Soulfire Grand Master (PLST) FRF-27
+Spara's Headquarters (SNC) 257 #!Triomes
+Sphinx's Revelation (BRC) 130
+Stonecoil Serpent (ELD) 235
+Stoneforge Mystic (2XM) 31
+Strip Mine (ATH) 77
+Sundering Titan (2XM) 292
+Survival of the Fittest (EXO) 129
+Sword of Body and Mind (2XM) 295
+Sword of Feast and Famine (ACR) 99
+Sword of Fire and Ice (2XM) 297
+Swords to Plowshares (BBD) 110
+Taiga (3ED) 287
+Tarmogoyf (UMA) 187
+Tasigur, the Golden Fang (TSR) 333
+Tendrils of Agony (STA) 34
+Terastodon (2XM) 182
+Terror of the Peaks (POTJ) 149p
+Teysa Karlov (MUL) 61
+The Meathook Massacre (PMID) 112p
+The Tabernacle at Pendrell Vale (LEG) 307
+Thespian's Stage (2XM) 327
+Thoughtseize (OTP) 20
+Thousand-Year Storm (GRN) 207
+Time Spiral (USG) 103
+Timetwister (2ED) 85
+Tireless Tracker (PLST) SOI-233
+Tolarian Academy (USG) 330
+Tooth and Nail (CMM) 327
+Toxic Deluge (2XM) 110
+Tropical Island (3ED) 288
+Tundra (3ED) 289
+Turnabout (DMR) 70
+Two-Headed Hellkite (DMC) 14
+Ugin, the Spirit Dragon (M21) 1
+Ulamog, the Ceaseless Hunger (CMM) 5
+Underground Sea (3ED) 290
+Unstable Harmonics (SLD) 478
+Upheaval (MH2) 270
+Urborg, Tomb of Yawgmoth (UMA) 254 #!Utility Lands
+Urza, Lord High Artificer (DMR) 71
+Valakut Awakening / Valakut Stoneforge (ZNR) 174
+Vampiric Tutor (DMR) 108
+Vengevine (UMA) 189
+Venser, Shaper Savant (TSR) 96
+Verdant Catacombs (MH2) 260 #!Fetch Lands
+Vesuva (M3C) 404
+Vindicate (MH2) 294
+Volcanic Island (3ED) 291
+Walking Ballista (FIC) 371
+Wall of Omens (PLST) EMA-34
+Wall of Roots (IMA) 190
+Wasteland (SLC) 23
+Wheel of Fortune (3ED) 185
+White Tower of Ecthelion (LTC) 367
+Wildfire (MM2) 134
+Winds of Abandon (MH1) 37
+Windswept Heath (KTK) 248 #!Fetch Lands
+Wooded Foothills (KTK) 249 #!Fetch Lands
+Wrath of God (DMR) 37
+Wrenn and Six (MH1) 217
+Wurmcoil Engine (SLD) 2196
+Xander's Lounge (SNC) 260 #!Triomes
+Xenagos, God of Revels (LCC) 295
+Yarok, the Desecrated (M20) 220
+Yawgmoth, Thran Physician (TSR) 336
+Yawgmoth's Will (USG) 171
+Yidris, Maelstrom Wielder (PZ2) 64
+Young Pyromancer (UMA) 155
+Zagoth Triome (PIKO) 259p #!Triomes
+Ziatora's Proving Ground (SNC) 261 #!Triomes
