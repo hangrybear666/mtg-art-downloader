@@ -8,7 +8,7 @@ We now use [poetry](https://python-poetry.org/docs/) for dependency management:
 
 ```shell
 # install fedora python 3.14 package
-sudo dnf install python314
+sudo dnf install python314 python3.14-devel
 cd ~/git
 git clone git@github.com:hangrybear666/mtg-art-downloader.git
 cd mtg-art-downloader
@@ -23,7 +23,14 @@ poetry run python main.py
 python main.py
 ```
 
-- Alternatively you can get PyCharm which has native support for Poetry and can automatically start the app for you!
+## Commiting - To ensure pipelines on push succeeds
+
+**Run pre-commit hooks for code formatting and standardization**:
+
+```bash
+pre-commit clean
+pre-commit run --all-files
+```
 
 ## How to use with a Decklist
 - Paste a decklist into the cards.txt file in the working directory of MTG Art Downloader
