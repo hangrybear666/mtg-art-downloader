@@ -172,7 +172,9 @@ class Download:
             remove_empty_and_commented_lines = [
                 line
                 for line in self.cards
-                if isinstance(line, str) and len(line.strip()) > 1 and line.strip()[:1] != "#"
+                if isinstance(line, str)
+                and len(line.strip()) > 1
+                and line.strip()[:1] != "#"
             ]
             # remove lines including hashtags e.g. Moxfield tags
             remove_lines_with_tags = [
@@ -187,6 +189,7 @@ class Download:
                     f"{set(remove_empty_and_commented_lines) - set(remove_lines_with_tags)}"
                 )
             from typing import cast
+
             cards_to_process = cast(list[Union[dict, str]], remove_lines_with_tags)
             # log all filtered out cards if log level is set to DEBUG
             if len(cards_to_process) < len(self.cards):

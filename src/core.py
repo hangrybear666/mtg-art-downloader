@@ -250,7 +250,10 @@ def get_mtgp_code_pmo(
             return None
         # Type-safe sorting: cast to appropriate type
         from typing import cast
-        sorted_matches = sorted(matches, key=lambda i: cast(float, i["match"]), reverse=True)
+
+        sorted_matches = sorted(
+            matches, key=lambda i: cast(float, i["match"]), reverse=True
+        )
         code_value = sorted_matches[0]["code"]
         return str(code_value) if code_value else None
     except (KeyError, TypeError, IndexError, AttributeError):
