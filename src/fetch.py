@@ -1,6 +1,7 @@
 """
 SCRYFALL REQUESTS
 """
+
 import json
 from typing import Callable, Optional, Any
 
@@ -109,7 +110,9 @@ def get_scryfall_set(code: str) -> dict:
     @param code: MTG set code, ex: MH2
     @return: Set data as dict.
     """
-    with requests.get(f"https://api.scryfall.com/sets/{code}", timeout=TIMEOUT) as response:
+    with requests.get(
+        f"https://api.scryfall.com/sets/{code}", timeout=TIMEOUT
+    ) as response:
         if response.status_code == 200:
             data = response.json() or {}
             return data if data.get("object") == "set" else {}
@@ -126,7 +129,9 @@ def get_scryfall_card_named(name: str, code: str) -> dict:
     @return: Card data as dict.
     """
     with requests.get(
-        f"https://api.scryfall.com/cards/named", params={"fuzzy": name, "set": code}, timeout=TIMEOUT
+        f"https://api.scryfall.com/cards/named",
+        params={"fuzzy": name, "set": code},
+        timeout=TIMEOUT,
     ) as response:
         if response.status_code == 200:
             data = response.json() or {}
@@ -143,7 +148,9 @@ def get_scryfall_card_numbered(code: str, number: str) -> dict:
     @param number: Collector number of the card.
     @return: Card data as dict.
     """
-    with requests.get(f"https://api.scryfall.com/cards/{code}/{number}", timeout=TIMEOUT) as response:
+    with requests.get(
+        f"https://api.scryfall.com/cards/{code}/{number}", timeout=TIMEOUT
+    ) as response:
         if response.status_code == 200:
             data = response.json() or {}
             return data if data.get("object", "error") != "error" else {}

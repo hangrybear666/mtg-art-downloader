@@ -148,7 +148,7 @@ class Download:
             # filter out empty lines and commented out lines
             cards_to_process = [line for line in self.cards
                                 if len(line.strip()) > 1 and
-                                line.strip()[:1] is not "#"]
+                                line.strip()[:1] != "#"]
             # log all filtered cards if log level is set to DEBUG
             if len(cards_to_process) < len(self.cards):
                 log_debug(f"Filtered out {len(self.cards) - len(cards_to_process)} lines.")

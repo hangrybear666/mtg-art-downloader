@@ -1,6 +1,7 @@
 """
 CORE FUNCTIONS
 """
+
 import json
 import os
 from typing import Optional, Union
@@ -281,6 +282,7 @@ def get_card_face(entries: list[dict], back: bool = False) -> Optional[str]:
 VERY BASIC LOGGING
 """
 
+
 def log_info(message: str) -> None:
     """
     INFO Logging utility
@@ -288,19 +290,28 @@ def log_info(message: str) -> None:
     if not cfg.log_level == "NONE":
         print(f"{Fore.CYAN}{Style.NORMAL}INFO:{Style.RESET_ALL} {message}", flush=True)
 
+
 def log_debug(message: str) -> None:
     """
     Debug logging for development purposes
     """
     if cfg.log_level == "DEBUG" and not cfg.log_level == "NONE":
-        print(f"{Fore.LIGHTMAGENTA_EX}{Style.DIM}DEBUG:{Style.RESET_ALL} {message}", flush=True)
+        print(
+            f"{Fore.LIGHTMAGENTA_EX}{Style.DIM}DEBUG:{Style.RESET_ALL} {message}",
+            flush=True,
+        )
+
 
 def log_mtgp(label: str) -> None:
     """
     Log card that was successfully downloaded from MTGP.
     """
     if not cfg.log_level == "NONE":
-        print(f"{Fore.GREEN}{Style.BRIGHT}MTGP SUCCESS:{Style.RESET_ALL} {label}", flush=True)
+        print(
+            f"{Fore.GREEN}{Style.BRIGHT}MTGP SUCCESS:{Style.RESET_ALL} {label}",
+            flush=True,
+        )
+
 
 def log_scryfall(message: str, is_fallback: bool) -> None:
     """
@@ -311,9 +322,16 @@ def log_scryfall(message: str, is_fallback: bool) -> None:
     """
     if not cfg.log_level == "NONE":
         if is_fallback:
-            print(f"{Fore.LIGHTGREEN_EX}{Style.DIM}SCRY [Fallback] SUCCESS:{Style.RESET_ALL} {message}", flush=True)
+            print(
+                f"{Fore.LIGHTGREEN_EX}{Style.DIM}SCRY [Fallback] SUCCESS:{Style.RESET_ALL} {message}",
+                flush=True,
+            )
         else:
-            print(f"{Fore.GREEN}{Style.BRIGHT}SCRY SUCCESS:{Style.RESET_ALL} {message}", flush=True)
+            print(
+                f"{Fore.GREEN}{Style.BRIGHT}SCRY SUCCESS:{Style.RESET_ALL} {message}",
+                flush=True,
+            )
+
 
 def log_failed(
     label: str,

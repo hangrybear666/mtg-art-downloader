@@ -1,6 +1,7 @@
 """
 CARD CLASSES
 """
+
 import os
 from functools import cached_property
 from typing import Optional
@@ -440,7 +441,9 @@ class MDFC(Card):
         # Download only scryfall?
         if cfg.only_scryfall:
             for i, scry_url in enumerate(self.scry_urls):
-                result = self.download_scryfall(scry_url, self.scry_paths[i], self.labels[i], False)
+                result = self.download_scryfall(
+                    scry_url, self.scry_paths[i], self.labels[i], False
+                )
                 results.append((result, self.labels[i]))
                 if not result and logging:
                     log_failed(self.labels[i], action="SCRY")
@@ -456,7 +459,9 @@ class MDFC(Card):
                 if cfg.download_scryfall_fallback:
                     if logging:
                         log_failed(self.labels[i])
-                    self.download_scryfall(scry_url, self.scry_paths[i], self.labels[i], True)
+                    self.download_scryfall(
+                        scry_url, self.scry_paths[i], self.labels[i], True
+                    )
                 elif logging:
                     log_failed(self.labels[i])
             results.append((result, self.labels[i]))

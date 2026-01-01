@@ -1,6 +1,7 @@
 """
 ESTABLISH USER SETTINGS
 """
+
 import os
 import configparser
 import hjson
@@ -34,12 +35,18 @@ download_folder = os.path.join(
 
 # Scryfall sub folder
 scry = os.path.join(
-    cwd, download_folder + "/" + config.get("FILES", "Scryfall.Art.Folder", fallback="scryfall")
+    cwd,
+    download_folder
+    + "/"
+    + config.get("FILES", "Scryfall.Art.Folder", fallback="scryfall"),
 )
 
 # MTG Pics sub folder
 mtgp = os.path.join(
-    cwd, download_folder + "/" + config.get("FILES", "MTGPics.Art.Folder", fallback="mtgpics")
+    cwd,
+    download_folder
+    + "/"
+    + config.get("FILES", "MTGPics.Art.Folder", fallback="mtgpics"),
 )
 
 # Output naming convention
