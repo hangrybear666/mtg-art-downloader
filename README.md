@@ -19,8 +19,6 @@ pip install --upgrade pipx
 pipx install poetry
 poetry install
 poetry run python main.py
-# alternative directly run with python
-python main.py
 ```
 
 ## Commiting - To ensure pipelines on push succeeds
@@ -28,8 +26,8 @@ python main.py
 **Run pre-commit hooks for code formatting and standardization**:
 
 ```bash
-pre-commit clean
-pre-commit run --all-files
+poetry run pre-commit clean
+poetry run pre-commit run --all-files
 ```
 
 ## How to use with a Decklist
