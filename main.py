@@ -88,20 +88,25 @@ class Download:
     #     |\/| |__   |  |__| /  \ |  \ /__`
     #     |  | |___  |  |  | \__/ |__/ .__/
 
-    def rotate_log_file():
+    def rotate_log_files():
         """
-        Checks for existence of a prior logfile containing failed cards.
+        Checks for existence of prior logfiles containing failed cards and insufficient dimensions.
         If the prior log file contains card entries (more than 1 line), it is rotated with a timestamp.
         If it only contains a header or is empty, it is deleted.
-        Finally, a new log file is created with the current Berlin timestamp.
+        Finally, new log files are created with the current Berlin timestamp.
         """
         log_dir = os.path.join(cwd, "logs")
         log_file_path = os.path.join(log_dir, "failed_downloads.txt")
+        dimensions_file_path = os.path.join(log_dir, "insufficient_dimensions.txt")
 
         # Ensure directory exists to prevent errors
         Path(log_dir).mkdir(mode=511, parents=True, exist_ok=True)
 
-        # 1. Handle existing log file
+        # Generate shared header for all log files
+        current_time = datetime.now(ZoneInfo("Europe/Berlin"))
+        header_time = current_time.strftime("### %Y-%m-%d %H:%M:%S ###")
+
+        # 1. Handle existing failed_downloads.txt log file
         if os.path.isfile(log_file_path):
             try:
                 # Check content length (ignoring empty lines)
@@ -120,14 +125,21 @@ class Download:
             except OSError as e:
                 print(f"{Fore.RED}Error handling old log file: {e}{Style.RESET_ALL}")
 
-        # 2. Create new log file with Europe/Berlin Timezone Header
+        # 2. Handle existing insufficient_dimensions.txt - hard delete
+        if os.path.isfile(dimensions_file_path):
+            try:
+                os.remove(dimensions_file_path)
+            except OSError as e:
+                print(f"{Fore.RED}Error deleting dimensions log file: {e}{Style.RESET_ALL}")
+
+        # 3. Create new log files with Europe/Berlin Timezone Header
         try:
-            current_time = datetime.now(ZoneInfo("Europe/Berlin"))
-            header_time = current_time.strftime("### %Y-%m-%d %H:%M:%S ###")
             with open(log_file_path, "w", encoding="utf-8") as f:
                 f.write(f"{header_time}\n")
+            with open(dimensions_file_path, "w", encoding="utf-8") as f:
+                f.write(f"{header_time}\n")
         except Exception as e:
-            print(f"{Fore.RED}Could not initialize log file: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Could not initialize log files: {e}{Style.RESET_ALL}")
 
     def start(self) -> list[tuple[bool, str]]:
         """
@@ -207,7 +219,8 @@ class Download:
             f"\n{border}\n"
             f"Downloads finished in {Fore.CYAN}{Style.BRIGHT}{round(self.time, 2)}{Style.RESET_ALL} seconds!\n"
             f"All available files downloaded.\n"
-            f"Check {Fore.CYAN}{Style.NORMAL}logs/failed_downloads.txt{Style.RESET_ALL} for misses.\n"
+            f"Check {Fore.CYAN}{Style.NORMAL}logs/failed_downloads.txt{Style.RESET_ALL}\n"
+            f"Check {Fore.YELLOW}{Style.NORMAL}logs/insufficient_dimensions.txt{Style.RESET_ALL}\n"
             f"Press enter to exit."
         )
         input()
@@ -220,6 +233,9 @@ class Download:
     def download_normal(self, card: str, disable_all: bool = False) -> DownloadResult:
         """
         Download a card with no defined set code.
+        Relevant flags in config are:
+            - Download.All: set True to download multiple artworks
+            - Only.Search.Unique.Art: Only set true if specific artwork has low resolution
         @param card: Card name
         @param disable_all: Disable download all
         """
@@ -343,7 +359,7 @@ if __name__ == "__main__":
         print()  # Add newline gap
 
     # Rotate log files
-    Download.rotate_log_file()
+    Download.rotate_log_files()
 
     # Start the Download
     Download(choice).start()

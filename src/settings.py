@@ -103,3 +103,7 @@ unique = (
 
 # Include extras in search
 include_extras = str(config.getboolean("SEARCH", "Include.Extras", fallback=True))
+
+# log output warnings when card dimensions are not sufficient for printing
+card_width_warning_limit = int(config.getint("SEARCH", "Card.Dimension.Warning.Width", fallback=633))
+card_height_warning_limit = int(config.getint("SEARCH", "Card.Dimension.Warning.Height", fallback=471))

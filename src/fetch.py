@@ -3,10 +3,12 @@ SCRYFALL REQUESTS
 """
 
 import json
+import os
 from typing import Callable, Optional, Any
-
+from src import settings as cfg
 import requests
 from backoff import on_exception, expo
+from PIL import Image
 from ratelimit import RateLimitDecorator, sleep_and_retry
 from requests import RequestException, Timeout
 
@@ -190,6 +192,29 @@ def get_mtgp_image(url: str, path: str):
         if response.status_code == 200:
             with open(path, "wb") as f:
                 f.write(response.content)
+
+            # Import only locally to avoid circular dependencies
+            from src.core import log_debug, log_size_warning
+
+            # Check file size in kilobytes
+            file_size_kb = round(os.path.getsize(path) / 1024, 0)
+
+            # Check image dimensions
+            try:
+                with Image.open(path) as img:
+                    width, height = img.size
+                    if width < cfg.card_width_warning_limit or height < cfg.card_height_warning_limit:
+                        # Python ternary: value_if_true if condition else value_if_false
+                        log_size_warning(
+                            os.path.basename(path), file_size_kb, width, height,
+                            action="MTGP",
+                        )
+            except Exception as e:
+                log_debug(
+                    f"Image saved: {os.path.basename(path)} | "
+                    f"Dimensions: Error reading image ({e})"
+                )
+
             return True
         return False
 

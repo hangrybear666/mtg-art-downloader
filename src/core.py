@@ -356,3 +356,33 @@ def log_failed(
             f.write(f"{label}\n")
     if print_out:
         print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}", flush=True)
+
+def log_size_warning(
+    file: str,
+    size: int,
+    width: int,
+    height: int,
+    print_out: bool = True,
+    write_log: bool = True,
+    filename: str = "insufficient_dimensions",
+    action: str = "MTGP",
+) -> None:
+    """
+    Log card that has insufficient width and/or height for printing.
+    @param file: MTG card file with insufficient size.
+    @param size: file size in kilobytes
+    @param width: width in pixels
+    @param height: height in pixels
+    @param print_out: Whether to print the failure.
+    @param write_log: Whether to write failure to log file.
+    @param filename: Name of the log file.
+    @param action: The particular action that failed (MTGP or SCRY)
+    """
+    if write_log:
+        Path(os.path.join(cwd, "logs")).mkdir(mode=511, parents=True, exist_ok=True)
+        with open(
+            os.path.join(cwd, f"logs/{filename}.txt"), "a", encoding="utf-8"
+        ) as f:
+            f.write(f"{file} [{size}kb] [{width}x{height}]\n")
+    if print_out:
+        print(f"{Fore.YELLOW}{Style.BRIGHT}{action} INSUFFICIENT DIMENSIONS:{Style.RESET_ALL} {width}px x {height}px for {file}", flush=True)

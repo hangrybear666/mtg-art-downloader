@@ -58,6 +58,7 @@ cards make sure to use MID and not PMID!
 - You can choose whether to include extras in the search, this includes un-sets and special championship cards.
 - You can increase or decrease threads added per second depending on the speed of your internet.
 - You can choose the naming convention for saving the downloaded images.
+- You can limit card dimensions by width and height to issue log file warnings in case of images being too small
 
 ## Testing
 - You can test the app for consistency with:

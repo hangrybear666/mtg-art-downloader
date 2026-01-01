@@ -1,4 +1,4 @@
-Azorius Signet (C20) 238
+# Azorius Signet
 Battlefield Forge (FIC) 375
 Birds of Paradise (8ED) 233
 Brushland (LTC) 297
