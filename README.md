@@ -71,28 +71,28 @@ INFO: can be disabled in `config.ini` via `Enable.Card.Classification = false`
 
 - **Type Precedence System**: Organizes cards by type with a strict precedence hierarchy
 - **Color Identity Classification**: Separates cards by color within appropriate folders
-- **Type Precedence Rules**: Token > Land > Enchantment > Artifact > Other
+- **Type Precedence Rules**: Token > Land > Planeswalker > Enchantment > Artifact > Other
 
 ### Precedence Examples
 
 1. **Token has absolute priority**
-   - "Token Artifact Enchantment Land" → `Token/` folder
    - All tokens go to `Token/{color_identity}/` regardless of other types
 
-2. **Land takes precedence over Enchantment and Artifact**
+2. **Land takes precedence over Planeswalker, Enchantment and Artifact**
    - "Artifact Land" → `Land/` folder (not `Artifact/`)
    - "Enchantment Land — Saga" (Urza's Saga) → `Land/` folder
 
-3. **Enchantment takes precedence over Artifact**
+3. **Planeswalker takes precedence over Enchantment and Artifact**
+   - All Planeswalkers get color identity subfolders `Planeswalker/{color_identity}/`
+
+4. **Enchantment takes precedence over Artifact**
    - "Legendary Artifact Enchantment" → `Enchantment/{color_identity}/` folder
-   - "Enchantment Creature — God" → `Enchantment/{color_identity}/` folder
 
-4. **Artifact stands alone**
+5. **Artifact stands alone**
    - "Artifact — Equipment" → `Artifact/` folder (no color subfolders)
-   - "Artifact Creature" → `Artifact/` folder
 
-5. **Other cards go to root color folders**
-   - Creatures, Sorceries, Instants, Planeswalkers → `{color_identity}/` folder
+6. **Other cards go to root color folders**
+   - Creatures, Sorceries, Instants → `{color_identity}/` folder
 
 ### Special Cases
 
@@ -112,12 +112,14 @@ downloaded/mtgpics/Enchantment/
 └── Colorless/      # Colorless artifact tokens (Treasure, Clue, etc.)
 downloaded/mtgpics/Token/
 └──same as above
+downloaded/mtgpics/Planeswalker/
+└──same as above
 ```
 
 ### Example 2: Root-Level Color Organization
 ```
 downloaded/mtgpics/
-├── White/          # White creatures, sorceries, instants, planeswalkers
+├── White/          # White creatures, sorceries, instants
 ├── Blue/           # Blue spells
 ├── Black/          # Black spells
 ├── Red/            # Red spells (Lightning Bolt, etc.)
@@ -127,6 +129,7 @@ downloaded/mtgpics/
 ├── Artifact/       # All artifacts (no color subfolders)
 ├── Land/           # All non-basic lands
 ├── Basic/          # All basic lands
+├── Planeswalker/   # (see Example 1)
 ├── Enchantment/    # (see Example 1)
 └── Token/          # (see Example 1)
 ```

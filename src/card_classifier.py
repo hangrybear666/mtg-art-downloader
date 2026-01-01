@@ -6,11 +6,12 @@ for MTG Art Downloader. It extends the existing Card class hierarchy by adding
 folder path logic based on card type precedence and color identity.
 
 Type Precedence (IMMUTABLE):
-    Token > Land > Enchantment > Artifact
+    Token > Land > Planeswalker > Enchantment > Artifact
 
 Folder Organization:
     - Tokens: Token/{color_identity}/
     - Lands: Land/ (or Basic/ for basic lands)
+    - Planeswalkers: Planeswalker/{color_identity}/
     - Enchantments: Enchantment/{color_identity}/
     - Artifacts: Artifact/
     - Others: {color_identity}/ (root level)
@@ -35,8 +36,9 @@ class CardClassifier:
 
     # Type precedence constants (higher number = higher precedence)
     TYPE_PRECEDENCE = {
-        "Token": 4,
-        "Land": 3,
+        "Token": 5,
+        "Land": 4,
+        "Planeswalker": 3,
         "Enchantment": 2,
         "Artifact": 1,
     }
@@ -116,12 +118,13 @@ class CardClassifier:
         Applies strict precedence rules:
         1. Token (if "Token" appears anywhere)
         2. Land (if "Land" appears, excluding Tokens)
-        3. Enchantment (if "Enchantment" appears, excluding Tokens/Lands)
-        4. Artifact (if "Artifact" appears, excluding Tokens/Lands/Enchantments)
-        5. None (all other cards go to root-level color folders)
+        3. Planeswalker (if "Planeswalker" appears, excluding Tokens/Lands)
+        4. Enchantment (if "Enchantment" appears, excluding Tokens/Lands/Planeswalkers)
+        5. Artifact (if "Artifact" appears, excluding above types)
+        6. None (all other cards go to root-level color folders)
 
         Returns:
-            The primary type string ("Token", "Land", "Enchantment", "Artifact"),
+            The primary type string ("Token", "Land", "Planeswalker", "Enchantment", "Artifact"),
             or None for cards that don't match any priority type.
         """
         # Check in order of precedence (highest to lowest)
@@ -130,6 +133,9 @@ class CardClassifier:
 
         if self._has_type("Land"):
             return "Land"
+
+        if self._has_type("Planeswalker"):
+            return "Planeswalker"
 
         if self._has_type("Enchantment"):
             return "Enchantment"
@@ -179,13 +185,13 @@ class CardClassifier:
         Returns:
             True if color subfolders should be used, False otherwise.
         """
-        # Token, Enchantment, and root-level cards use color subfolders
+        # Token, Planeswalker, Enchantment, and root-level cards use color subfolders
         # Land and Artifact do NOT use color subfolders
         if primary_type is None:
             # Root-level cards always use color folders
             return True
 
-        return primary_type in ["Token", "Enchantment"]
+        return primary_type in ["Token", "Planeswalker", "Enchantment"]
 
     def get_classified_folder_path(self) -> str:
         """
@@ -209,11 +215,14 @@ class CardClassifier:
         if primary_type == "Artifact":
             return "Artifact/"
 
-        # Token, Enchantment, and root-level cards use color subfolders
+        # Token, Planeswalker, Enchantment, and root-level cards use color subfolders
         color_folder = self.get_color_identity_folder()
 
         if primary_type == "Token":
             return f"Token/{color_folder}/"
+
+        if primary_type == "Planeswalker":
+            return f"Planeswalker/{color_folder}/"
 
         if primary_type == "Enchantment":
             return f"Enchantment/{color_folder}/"

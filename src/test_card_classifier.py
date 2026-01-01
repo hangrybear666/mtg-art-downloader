@@ -21,7 +21,7 @@ from card_classifier import CardClassifier, get_classified_folder_path
 
 
 class TestTypePrecedence:
-    """Test the type precedence system: Token > Land > Enchantment > Artifact"""
+    """Test the type precedence system: Token > Land > Planeswalker > Enchantment > Artifact"""
 
     def test_token_precedence_over_all(self):
         """Token should take precedence over all other types"""
@@ -303,6 +303,110 @@ class TestEnchantments:
         assert classifier.get_classified_folder_path() == "Enchantment/Colorless/"
 
 
+class TestPlaneswalkers:
+    """Test Planeswalker classification with all color identities"""
+
+    def test_planeswalker_white(self):
+        """White Planeswalkers (e.g., Gideon)"""
+        card = {
+            "name": "Gideon, Ally of Zendikar",
+            "type_line": "Legendary Planeswalker — Gideon",
+            "color_identity": ["W"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/White/"
+
+    def test_planeswalker_blue(self):
+        """Blue Planeswalkers (e.g., Jace)"""
+        card = {
+            "name": "Jace, the Mind Sculptor",
+            "type_line": "Legendary Planeswalker — Jace",
+            "color_identity": ["U"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Blue/"
+
+    def test_planeswalker_black(self):
+        """Black Planeswalkers (e.g., Liliana)"""
+        card = {
+            "name": "Liliana of the Veil",
+            "type_line": "Legendary Planeswalker — Liliana",
+            "color_identity": ["B"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Black/"
+
+    def test_planeswalker_red(self):
+        """Red Planeswalkers (e.g., Chandra)"""
+        card = {
+            "name": "Chandra, Torch of Defiance",
+            "type_line": "Legendary Planeswalker — Chandra",
+            "color_identity": ["R"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Red/"
+
+    def test_planeswalker_green(self):
+        """Green Planeswalkers (e.g., Nissa, Garruk)"""
+        card = {
+            "name": "Nissa, Who Shakes the World",
+            "type_line": "Legendary Planeswalker — Nissa",
+            "color_identity": ["G"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Green/"
+
+    def test_planeswalker_multicolor(self):
+        """Multicolor Planeswalkers (e.g., Wrenn and Six, Dack Fayden)"""
+        card = {
+            "name": "Wrenn and Six",
+            "type_line": "Legendary Planeswalker — Wrenn",
+            "color_identity": ["R", "G"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Multicolor/"
+
+    def test_planeswalker_colorless(self):
+        """Colorless Planeswalkers (e.g., Ugin, Karn)"""
+        card = {
+            "name": "Ugin, the Spirit Dragon",
+            "type_line": "Legendary Planeswalker — Ugin",
+            "color_identity": [],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Colorless/"
+
+    def test_planeswalker_precedence_over_enchantment(self):
+        """Planeswalker takes precedence over Enchantment (hypothetical card)"""
+        card = {
+            "name": "Enchantment Planeswalker",
+            "type_line": "Legendary Enchantment Planeswalker",
+            "color_identity": ["G"],
+        }
+        classifier = CardClassifier(card)
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Green/"
+
+    def test_land_precedence_over_planeswalker(self):
+        """Land takes precedence over Planeswalker (hypothetical card)"""
+        card = {
+            "name": "Planeswalker Land",
+            "type_line": "Legendary Land Planeswalker",
+            "color_identity": ["W"],
+        }
+        classifier = CardClassifier(card)
+        # Land takes precedence over Planeswalker
+        assert classifier.get_primary_type() == "Land"
+        assert classifier.get_classified_folder_path() == "Land/"
+
+
 class TestEdgeCases:
     """Test edge cases and unusual scenarios"""
 
@@ -360,15 +464,15 @@ class TestEdgeCases:
         assert classifier.get_classified_folder_path() == "Enchantment/White/"
 
     def test_planeswalker(self):
-        """Planeswalkers should go to root color folders"""
+        """Planeswalkers should go to Planeswalker/{color} folders"""
         card = {
             "name": "Jace",
             "type_line": "Legendary Planeswalker — Jace",
             "color_identity": ["U"],
         }
         classifier = CardClassifier(card)
-        assert classifier.get_primary_type() is None
-        assert classifier.get_classified_folder_path() == "Blue/"
+        assert classifier.get_primary_type() == "Planeswalker"
+        assert classifier.get_classified_folder_path() == "Planeswalker/Blue/"
 
     def test_saga(self):
         """Sagas are Enchantments and should use color subfolders"""

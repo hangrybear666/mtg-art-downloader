@@ -211,8 +211,8 @@ class Card:
         # Special handling for cards with existing subclass paths:
 
         # BasicLand and Land classes: Already handled by classifier
-        # Token class: Already handled by classifier (Token priority)
-        if self.__class__.__name__ in ["BasicLand", "Land", "Token"]:
+        # Token and Planeswalker classes: Already handled by classifier (priority types)
+        if self.__class__.__name__ in ["BasicLand", "Land", "Token", "Planeswalker"]:
             # Classifier already returns correct path, strip trailing slash
             self.path = classified_path.rstrip("/")
             return
