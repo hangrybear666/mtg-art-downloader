@@ -16,3 +16,4 @@ tester.py
 /.idea
 .venv/
 .claude/
+CLAUDE.md
