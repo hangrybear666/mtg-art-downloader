@@ -383,6 +383,6 @@ def log_size_warning(
         with open(
             os.path.join(cwd, f"logs/{filename}.txt"), "a", encoding="utf-8"
         ) as f:
-            f.write(f"{file} [{size}kb] [{width}x{height}]\n")
+            f.write(f"{file}\n[{size}kb] [{width}x{height}]\n")
     if print_out:
         print(f"{Fore.YELLOW}{Style.BRIGHT}{action} INSUFFICIENT DIMENSIONS:{Style.RESET_ALL} {width}px x {height}px for {file}", flush=True)
