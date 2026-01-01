@@ -167,6 +167,9 @@ class Download:
                 log_debug(
                     f"Filtered out lines (empty lines only counted once):\n"
                     f"{set(self.cards) - set(cards_to_process)}")
+        else:
+            # In test mode, use cards as-is without filtering
+            cards_to_process = self.cards
 
         # Create a pool to execute these downloads
         with Pool(processes=cpu_count()) as pool:
