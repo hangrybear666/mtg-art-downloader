@@ -57,6 +57,7 @@ cards make sure to use MID and not PMID!
 - You can choose whether to download ONLY scryfall arts.
 - You can choose whether to include extras in the search, this includes un-sets and special championship cards.
 - You can increase or decrease threads added per second depending on the speed of your internet.
+- You can disable multithreading to force sequential processing for e.g. debugging failure states
 - You can choose the naming convention for saving the downloaded images.
 - You can limit card dimensions by width and height to issue log file warnings in case of images being too small
 - You can toggle a comprehensive card classification system that organizes downloads into types and color identities

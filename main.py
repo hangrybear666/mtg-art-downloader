@@ -172,7 +172,7 @@ class Download:
             cards_to_process = self.cards
 
         # Create a pool to execute these downloads
-        with Pool(processes=cpu_count()) as pool:
+        with Pool(processes=1 if cfg.disable_multithreading else cpu_count()) as pool:
             log_info(f"===== Downloading {len(cards_to_process)} cards! =====")
             downloads = pool.map(self.stage_download, cards_to_process)
 

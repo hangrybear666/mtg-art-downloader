@@ -83,6 +83,9 @@ download_all = config.getboolean("SETTINGS", "Download.All", fallback=False)
 # Enable card classification by type and color identity?
 enable_classification = config.getboolean("SETTINGS", "Enable.Card.Classification", fallback=True)
 
+# Hardcodes simultaneous Pool processes to 1 to enable sequential processing
+disable_multithreading = config.getboolean("SETTINGS", "Disable.Multithreading.Parallelism", fallback=False)
+
 #     __   ___       __   __
 #    /__` |__   /\  |__) /  ` |__|
 #    .__/ |___ /~~\ |  \ \__, |  |

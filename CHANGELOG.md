@@ -8,6 +8,9 @@
   - Added Planeswalker to type precedence: Token > Land > Planeswalker > Enchantment > Artifact
   - Planeswalkers now organized by color identity in `Planeswalker/{color}/` folders
 
+- **config.ini**:
+  - adds flag to disable multithreading in order to test sequential execution for e.g. debugging
+
 ### Fix
 
 - **main.py**: Fixed UnboundLocalError in test mode where `cards_to_process` was undefined
