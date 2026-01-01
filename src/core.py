@@ -301,6 +301,15 @@ def log_debug(message: str) -> None:
             flush=True,
         )
 
+def log_warning(message: str) -> None:
+    """
+    WARNING messages to notify of errors in e.g. cards.txt
+    """
+    if not cfg.log_level == "NONE":
+        print(
+            f"{Fore.YELLOW}{Style.BRIGHT}WARNING:{Style.RESET_ALL} {message}",
+            flush=True,
+        )
 
 def log_mtgp(label: str) -> None:
     """

@@ -10,7 +10,7 @@ from datetime import datetime
 from functools import cached_property
 from multiprocessing import cpu_count, freeze_support
 from multiprocessing.pool import Pool
-from src.core import log_debug, log_info
+from src.core import log_debug, log_info, log_warning
 from pathlib import Path
 from typing import Union, Optional
 from time import perf_counter
@@ -158,10 +158,16 @@ class Download:
             return []
         if not self.is_test:
             # filter out empty lines and commented out lines
-            cards_to_process = [line for line in self.cards
-                                if len(line.strip()) > 1 and
-                                line.strip()[:1] != "#"]
-            # log all filtered cards if log level is set to DEBUG
+            remove_empty_and_commented_lines = [line for line in self.cards if len(line.strip()) > 1 and line.strip()[:1] != "#"]
+            # remove lines including hashtags e.g. Moxfield tags
+            remove_lines_with_tags = [line for line in remove_empty_and_commented_lines if not "#" in line]
+            if len(remove_lines_with_tags) < len(remove_empty_and_commented_lines):
+                log_warning(f"Removed {len(remove_empty_and_commented_lines) - len(remove_lines_with_tags)} lines.")
+                log_warning(
+                    f"Removed lines contain a hashtag in the midst - these are invalid:\n"
+                    f"{set(remove_empty_and_commented_lines) - set(remove_lines_with_tags)}")
+            cards_to_process = remove_lines_with_tags
+            # log all filtered out cards if log level is set to DEBUG
             if len(cards_to_process) < len(self.cards):
                 log_debug(f"Filtered out {len(self.cards) - len(cards_to_process)} lines.")
                 log_debug(

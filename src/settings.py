@@ -12,6 +12,9 @@ with open("config.ini", "r", encoding="utf-8") as f:
     config = configparser.ConfigParser()
     config.read_file(f)
 
+# Sets log level for the application. Valid Values are INFO | DEBUG | NONE
+log_level = config.get("LOG_LEVEL", "Log.Level", fallback="INFO")
+
 #     __   __        __  ___           ___  __
 #    /  ` /  \ |\ | /__`  |   /\  |\ |  |  /__`
 #    \__, \__/ | \| .__/  |  /~~\ | \|  |  .__/
@@ -57,9 +60,6 @@ naming = config.get(
 #     __   ___ ___ ___         __   __
 #    /__` |__   |   |  | |\ | / _` /__`
 #    .__/ |___  |   |  | | \| \__> .__/
-
-# Sets log level for the application. Valid Values are INFO | DEBUG | NONE
-log_level = config.get("SETTINGS", "Log.Level", fallback="INFO")
 
 # Download full card image from Scryfall?
 download_scryfall_full = config.getboolean(
