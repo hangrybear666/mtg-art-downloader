@@ -10,6 +10,7 @@ import requests
 from difflib import SequenceMatcher
 from pathlib import Path
 from colorama import Style, Fore
+from unidecode import unidecode
 from bs4 import BeautifulSoup
 from requests import RequestException
 from src import settings as cfg
@@ -362,7 +363,7 @@ def log_failed(
         with open(
             os.path.join(cwd, f"logs/{filename}.txt"), "a", encoding="utf-8"
         ) as f:
-            f.write(f"{label}\n")
+            f.write(f"{action}: {label}\n")
     if print_out:
         print(f"{Fore.RED}{action} FAILED:{Style.RESET_ALL} {label}", flush=True)
 
