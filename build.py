@@ -22,6 +22,10 @@ files = [
     {"src": os.path.join(CWD, "LICENSE"), "dst": os.path.join(DIST, "LICENSE")},
     {"src": os.path.join(CWD, "README.md"), "dst": os.path.join(DIST, "README.md")},
     {"src": os.path.join(CWD, "cards.txt"), "dst": os.path.join(DIST, "cards.txt")},
+    {
+        "src": os.path.join(CWD, "cards.test.txt"),
+        "dst": os.path.join(DIST, "cards.txt"),
+    },
     {"src": os.path.join(CWD, "config.ini"), "dst": os.path.join(DIST, "config.ini")},
     # --- SOURCE DIRECTORY
     {
