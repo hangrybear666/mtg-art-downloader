@@ -19,11 +19,14 @@ jobs:
           - os: ubuntu-latest
             TARGET: linux
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v4
+    - name: Checkout SCM
+      uses: actions/checkout@v5
+      # https://github.com/actions/checkout
+    - name: Set up Python 3.14
+      uses: actions/setup-python@v6.1.0
+      # https://github.com/actions/setup-python
       with:
-        python-version: "3.10"
+        python-version: "3.14"
     #-----------------------------------------------
     #  -----  install Poetry and Dependencies  -----
     #-----------------------------------------------
@@ -36,7 +39,8 @@ jobs:
       run: |
         poetry run python build.py
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v5.0.0
+      # https://github.com/actions/upload-artifact
       with:
         path: ./dist/
         name: MTG Art Downloader (${{ matrix.TARGET }})
