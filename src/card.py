@@ -16,7 +16,7 @@ from src import core
 from src.constants import con
 from src.core import log_failed, log_mtgp, log_scryfall, log_debug, log_info
 from src.fetch import get_scryfall_image, get_mtgp_image, get_mtgp_page
-from src.types import DownloadResult
+from src.type_defs import DownloadResult
 from src.card_classifier import CardClassifier
 
 cwd = os.getcwd()

@@ -30,7 +30,7 @@ from src.fetch import (
     get_scryfall_card_numbered,
     get_scryfall_card_search,
 )
-from src.types import DownloadResult
+from src.type_defs import DownloadResult
 
 # Core variables
 detailed_reg = re.compile(r"(.*) \((.*)\) ?(.*)")
