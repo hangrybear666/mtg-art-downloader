@@ -48,14 +48,24 @@ jobs:
         poetry config virtualenvs.in-project true --local
         poetry install
     - name: Build with PyInstaller
+      shell: bash
       run: |
         poetry run python build.py ${{ steps.get_version.outputs.version }}
+        # Rename zip file to include platform identifier
+        cd dist
+        for zipfile in *.zip; do
+          if [ -f "$zipfile" ]; then
+            new_name="${zipfile%.zip}-${{ matrix.TARGET }}.zip"
+            mv "$zipfile" "$new_name"
+            echo "Renamed $zipfile to $new_name"
+          fi
+        done
     - name: Upload artifact
       uses: actions/upload-artifact@v5.0.0
       # https://github.com/actions/upload-artifact
       with:
         path: ./dist/
-        name: mtg-art-downloader-v${{ steps.get_version.outputs.version }}-${{ matrix.TARGET }}
+        name: mtg-art-downloader-${{ steps.get_version.outputs.version }}-${{ matrix.TARGET }}
 
   release:
     needs: build
