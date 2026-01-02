@@ -1,3 +1,17 @@
+## v1.5.3 (2026-01-02)
+
+**Forked by hangrybear666**
+
+### Fix
+- **tests**: Fixed test case package imports
+- **types**: Fixed mypy static type definition imports (renamed `types.py` → `type_defs.py`)
+- **mypy**: Resolved mypy static typing issues in test cases
+
+### Refactor
+
+- **CI/CD**: Ensured pre-commit hooks and tests run in pipeline `pytest-mypy.yml`
+- **CI/CD**: Restructured Deployment pipeline `build-release.yml` for automated releases
+
 ## v1.5.2 (2026-01-01)
 
 **Forked by hangrybear666** - Extended and modernized version

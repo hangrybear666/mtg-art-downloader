@@ -67,9 +67,9 @@ cards make sure to use MID and not PMID!
 - You can limit card dimensions by width and height to issue log file warnings in case of images being too small
 - You can toggle a comprehensive card classification system that organizes downloads into types and color identities
 
-## Card Classification System
+## Card Classification Extension Toggle
 
-The MTG Art Downloader now includes an advanced card classification system that automatically organizes downloaded card artwork based on card type and color identity. This system uses data from the Scryfall API (already fetched during the normal download process) to classify cards without making additional API requests.
+The Card classification Extension automatically organizes downloaded card artwork based on card type and color identity.
 
 INFO: can be disabled in `config.ini` via `Enable.Card.Classification = false`
 
@@ -78,27 +78,6 @@ INFO: can be disabled in `config.ini` via `Enable.Card.Classification = false`
 - **Type Precedence System**: Organizes cards by type with a strict precedence hierarchy
 - **Color Identity Classification**: Separates cards by color within appropriate folders
 - **Type Precedence Rules**: Token > Land > Planeswalker > Enchantment > Artifact > Other
-
-### Precedence Examples
-
-1. **Token has absolute priority**
-   - All tokens go to `Token/{color_identity}/` regardless of other types
-
-2. **Land takes precedence over Planeswalker, Enchantment and Artifact**
-   - "Artifact Land" → `Land/` folder (not `Artifact/`)
-   - "Enchantment Land — Saga" (Urza's Saga) → `Land/` folder
-
-3. **Planeswalker takes precedence over Enchantment and Artifact**
-   - All Planeswalkers get color identity subfolders `Planeswalker/{color_identity}/`
-
-4. **Enchantment takes precedence over Artifact**
-   - "Legendary Artifact Enchantment" → `Enchantment/{color_identity}/` folder
-
-5. **Artifact stands alone**
-   - "Artifact — Equipment" → `Artifact/` folder (no color subfolders)
-
-6. **Other cards go to root color folders**
-   - Creatures, Sorceries, Instants → `{color_identity}/` folder
 
 ### Special Cases
 

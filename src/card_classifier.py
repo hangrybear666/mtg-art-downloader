@@ -7,19 +7,6 @@ folder path logic based on card type precedence and color identity.
 
 Type Precedence (IMMUTABLE):
     Token > Land > Planeswalker > Enchantment > Artifact
-
-Folder Organization:
-    - Tokens: Token/{color_identity}/
-    - Lands: Land/ (or Basic/ for basic lands)
-    - Planeswalkers: Planeswalker/{color_identity}/
-    - Enchantments: Enchantment/{color_identity}/
-    - Artifacts: Artifact/
-    - Others: {color_identity}/ (root level)
-
-Color Identity Subfolders:
-    - White, Blue, Black, Red, Green (monocolor)
-    - Multicolor (2+ colors)
-    - Colorless (no colors or missing field)
 """
 
 from typing import Optional
@@ -58,7 +45,7 @@ class CardClassifier:
 
         Args:
             card_data: Dictionary containing Scryfall card information,
-                      including 'type_line' and 'color_identity' fields.
+                    including 'type_line' and 'color_identity' fields.
         """
         self.card_data = card_data
         self._type_line = self._get_type_line()
