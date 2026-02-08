@@ -162,7 +162,8 @@ class Card:
     def scry_url(self) -> str:
         # Download link for Scryfall art crop
         return self.c.get("image_uris", {}).get(
-            "large" if cfg.download_scryfall_full else "art_crop", ""
+            # choice between large and png (typically higher quality)
+            "png" if cfg.download_scryfall_full else "art_crop", ""
         )
 
     @cached_property
