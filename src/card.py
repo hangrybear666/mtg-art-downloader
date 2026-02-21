@@ -163,7 +163,8 @@ class Card:
         # Download link for Scryfall art crop
         return self.c.get("image_uris", {}).get(
             # choice between large and png (typically higher quality)
-            "png" if cfg.download_scryfall_full else "art_crop", ""
+            "png" if cfg.download_scryfall_full else "art_crop",
+            "",
         )
 
     @cached_property
